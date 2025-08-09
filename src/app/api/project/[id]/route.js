@@ -1,9 +1,10 @@
-import connectToDB from "@/configs/db";
+
 import ArticleModel from "@/models/Article";
 import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 import path from "path";
 import { writeFile } from "fs/promises";
+import connectToDB from "../../../../../configs/db";
 
 export async function PUT(req, { params }) {
   await connectToDB();
