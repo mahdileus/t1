@@ -1,5 +1,5 @@
 
-import ArticleModel from "../../../../models/Article"
+import ArticleModel from "../../../../../models/Article"
 import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 import path from "path";
