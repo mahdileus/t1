@@ -1,3 +1,5 @@
+import { HiOutlineSquaresPlus } from "react-icons/hi2"
+
 export default function SEO (){
         const process = [
         {
