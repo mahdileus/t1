@@ -47,7 +47,7 @@ export default function LatestArticle({ posts }) {
                 <div className="container mx-auto flex items-center justify-between z-10 py-4" style={{padding:0}}>
                     <span className=" font-yekan-bakh text-third text-2xl font-medium">
                         مقالات   <span className="text-black font-light text-xl hidden md:inline-block">|</span>
-                        <span className="text-gray-600 text-base px-2 hidden md:inline-block">توضیحات کوتاه در رابطه با این بخش</span>
+                        <span className="text-gray-600 text-base px-2 hidden md:inline-block">مطالب مفید برای ارتقای دانش خود</span>
                     </span>
 
                     <Link

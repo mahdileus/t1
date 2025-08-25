@@ -26,7 +26,7 @@ export default function Contact() {
 
                     </h4>
                     <div className="flex items-center justify-between gap-8">
-                        <Link href={"/"} className="flex justify-between group items-center hover:bg-black hover:border-black hover:text-white transition-all py-2 px-6 border-2 rounded-full gap-10">
+                        <Link href={"/web-design"} className="flex justify-between group items-center hover:bg-black hover:border-black hover:text-white transition-all py-2 px-6 border-2 rounded-full gap-10">
                             <p className="font-yekan-bakh text-lg ">شروع کنید</p>
                             <HiOutlineArrowLongLeft className="text-3xl group-hover:-translate-x-2 transition-all" />
                         </Link>

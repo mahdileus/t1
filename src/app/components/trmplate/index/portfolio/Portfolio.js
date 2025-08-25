@@ -46,11 +46,11 @@ export default function Portfolio({ projects }) {
                 <div className="container mx-auto flex items-center justify-between z-10 py-4" style={{padding:0}}>
                     <span className=" font-yekan-bakh text-third text-2xl font-medium">
                         پروژه های موفق تیوان  <span className="text-black font-light text-xl hidden md:inline-block">|</span>
-                        <span className="text-gray-600 text-base px-2 hidden md:inline-block">توضیحات کوتاه در رابطه با این بخش</span>
+                        <span className="text-gray-600 text-base px-2 hidden md:inline-block">شما نیز میتوانید یکی از صد کسب و کار موفق ما باشید</span>
                     </span>
 
                     <Link
-                        href="/"
+                        href="/portfolio"
                         className="flex group justify-between items-center py-2 px-2 hover:bg-gray-100 transition-all bg-[#f8f9fb] rounded-full gap-6"
                     >
                         <p className="font-yekan-bakh text-lg">شروع کنید</p>
@@ -67,7 +67,7 @@ export default function Portfolio({ projects }) {
             </div>
             {/* portfolio boxes */}
             {/* slider */}
-            <div className="relative py-10 container ">
+            <div className="relative py-20 container ">
                 <Swiper
                     autoplay={{
                         delay: 3000, // هر 3 ثانیه یک اسلاید
@@ -94,7 +94,7 @@ export default function Portfolio({ projects }) {
 
             </div>
             <div className="flex justify-center items-center">
-                <Link href={"/"} className="flex justify-between items-center group hover:bg-black hover:border-black transition-all hover:text-white py-2 px-6 border-2 rounded-full gap-10">
+                <Link href={"/portfolio"} className="flex justify-between items-center group hover:bg-black hover:border-black transition-all hover:text-white py-2 px-6 border-2 rounded-full gap-10">
                     <p className="font-yekan-bakh text-lg ">پروژه های بیشتر را مشاهد کنید </p>
                     <HiOutlineArrowLongLeft className="text-3xl transition-all group-hover:-translate-x-2" />
                 </Link>

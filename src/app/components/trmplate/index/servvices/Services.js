@@ -5,6 +5,7 @@ export default function Services() {
     const services = [
         {
             title: "طراحی وب‌سایت اختصاصی",
+            link:"/web-design",
             desc:"طراحی سایت‌های کاملاً اختصاصی با وردپرس که کاملا حرفه‌ای سفارشی‌سازی شده‌اند. سایت‌های ما ریسپانسیو، بهینه برای موتورهای جستجو و با تجربه کاربری بالا هستند تا کسب‌وکار شما را به بهترین شکل آنلاین معرفی کنند.",
             icon: <svg xmlns="http://www.w3.org/2000/svg" width="37.438" height="39.173"
                 viewBox="0 0 37.438 39.173">
@@ -26,6 +27,7 @@ export default function Services() {
         },
         {
             title: " برنامه‌نویسی حرفه‌ای",
+            link:"/programming",
             desc: " توسعه برنامه‌های تحت وب و اپلیکیشن‌های مدرن با زبان‌های PHP، Laravel، React و Node.js. کدنویسی ما مقیاس‌پذیر، بهینه و مطابق با استانداردهای روز است تا پروژه شما پایدار، امن و قابل توسعه باقی بماند.",
             icon: <svg xmlns="http://www.w3.org/2000/svg" width="30.439" height="40.585"
                 viewBox="0 0 30.439 40.585">
@@ -41,6 +43,7 @@ export default function Services() {
         },
         {
             title: "سئو (SEO)",
+            link:"/seo",
             desc: "ارائه خدمات کامل سئو شامل تحلیل کلمات کلیدی، بهینه‌سازی ساختار سایت و محتوا، افزایش سرعت بارگذاری و بهبود رتبه در گوگل تا کسب‌وکار شما در نتایج جستجو بیشتر دیده شود و ترافیک هدفمند جذب کند.",
             icon: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
                 <g id="code-circle-svgrepo-com" transform="translate(-2 -2)">
@@ -60,6 +63,7 @@ export default function Services() {
         },
         {
             title: "رشد فروش و تبلیغات دیجیتال",
+            link:"/seo",
             desc:"اجرای کمپین‌های تبلیغاتی حرفه‌ای در گوگل و شبکه‌های اجتماعی با هدف افزایش فروش و آگاهی برند. با تحلیل دقیق بازار و هدف‌گذاری هوشمند، بودجه تبلیغات شما به بهترین شکل مصرف شده و نتایج قابل اندازه‌گیری ارائه می‌شود.",
             icon: <svg xmlns="http://www.w3.org/2000/svg" width="39.004" height="39.004"
                 viewBox="0 0 39.004 39.004">
@@ -116,11 +120,11 @@ export default function Services() {
                 <div className="container mx-auto flex items-center justify-between z-10 py-4" style={{padding:0}}>
                     <span className=" font-yekan-bakh text-third text-2xl font-medium">
                         خدمات تیوان  <span className="text-black font-light text-xl hidden md:inline-block">|</span>
-                        <span className="text-gray-600 text-base px-2 hidden md:inline-block">توضیحات کوتاه در رابطه با این بخش</span>
+                        <span className="text-gray-600 text-base px-2 hidden md:inline-block">خدماتی که مارا با دیگران متمایز میکند</span>
                     </span>
 
                     <Link
-                        href="/"
+                        href="/web-design"
                         className="flex group justify-between items-center py-2 px-2 hover:bg-gray-100 transition-all bg-[#f8f9fb] rounded-full gap-6"
                     >
                         <p className="font-yekan-bakh text-lg">شروع کنید</p>
@@ -141,7 +145,9 @@ export default function Services() {
                         return (
                             <div key={index} className="border hover:border-[#ffcda6] hover:-translate-y-12 transition-all border-gray-100 relative  px-8 pt-18 pb-8 rounded-4xl my-4 h-[350px]">
                                 <span className="absolute -top-12 right-1/3 transition-all bg-[#fff3f0] p-8 rounded-full">{item.icon}</span>
+                                <Link href={item.link}>
                                 <h3 className=" font-yekan-bakh text-center font-medium text-lg mt-2 text-primary">{item.title}</h3>
+                                </Link>
 
                                 <p className="text-gray-600 p-4 text-sm rounded-3xl bg-gray-100 mt-4 font-yekan-bakh text-justify">{item.desc}</p>
 

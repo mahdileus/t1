@@ -49,25 +49,14 @@ export default function Portfolio({ projects }) {
                         <span className="text-gray-600 text-base px-2 hidden md:inline-block">هر آنچه که از ما بخواهید</span>
                     </span>
 
-                    <Link
-                        href="/"
-                        className="flex group justify-between items-center py-2 px-2 hover:bg-gray-100 transition-all bg-[#f8f9fb] rounded-full gap-6"
-                    >
-                        <p className="font-yekan-bakh text-lg">شروع کنید</p>
-                        <span className="w-8 h-8 relative bg-secondery rounded-full">
-                            <HiOutlineArrowLongLeft
-                                size={40}
-                                className="absolute group-hover:-translate-x-2 transition-all -top-1 bottom-0 -right-4 left-0 z-50"
-                            />
-                        </span>
-                    </Link>
+
                 </div>
 
 
             </div>
             {/* portfolio boxes */}
             {/* slider */}
-            <div className="relative py-10 container ">
+            <div className="relative py-20 container ">
                 <Swiper
                     autoplay={{
                         delay: 3000, // هر 3 ثانیه یک اسلاید
@@ -94,7 +83,7 @@ export default function Portfolio({ projects }) {
 
             </div>
             <div className="flex justify-center items-center">
-                <Link href={"/"} className="flex justify-between items-center group hover:bg-black hover:border-black transition-all hover:text-white py-2 px-6 border-2 rounded-full gap-10">
+                <Link href={"/portfolio"} className="flex justify-between items-center group hover:bg-black hover:border-black transition-all hover:text-white py-2 px-6 border-2 rounded-full gap-10">
                     <p className="font-yekan-bakh text-lg ">پروژه های بیشتر را مشاهد کنید </p>
                     <HiOutlineArrowLongLeft className="text-3xl transition-all group-hover:-translate-x-2" />
                 </Link>
