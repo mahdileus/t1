@@ -38,6 +38,10 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  mainPicture: {
+    type: String,
+    required: true,
+  },
   score: {
     type: Number,
     Default: 5,

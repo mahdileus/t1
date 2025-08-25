@@ -18,6 +18,7 @@ export async function POST(req) {
     const timeToRead = +formData.get("timeToRead");
     const tags = JSON.parse(formData.get("tags"));
     const img = formData.get("img");
+    const mainPicture = formData.get("mainPicture");
 
         const DOMAIN = process.env.DOMAIN || "http://localhost:3000";
 
@@ -25,6 +26,11 @@ export async function POST(req) {
     const filename = `${Date.now()}-${img.name}`;
     const filePath = path.join(process.cwd(), "public","uploads", filename);
     await writeFile(filePath, buffer);
+
+    const bufferPicture = Buffer.from(await mainPicture.arrayBuffer());
+    const filenpictureame = `${Date.now()}-${mainPicture.name}`;
+    const filepicturePath = path.join(process.cwd(), "public","uploads", filenpictureame);
+    await writeFile(filepicturePath, bufferPicture);
 
 
 
@@ -38,6 +44,7 @@ export async function POST(req) {
       timeToRead,
       tags,
       thumbnail: `${DOMAIN}/uploads/${filename}`,
+      mainPicture: `${DOMAIN}/uploads/${filename}`,
     });
 
     return Response.json({ message: "مقاله با موفقیت ایجاد شد", article }, { status: 201 });

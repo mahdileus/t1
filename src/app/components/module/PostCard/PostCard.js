@@ -23,7 +23,7 @@ export default function PostCard({post}) {
         </div>
 
         {/* عنوان مقاله */}
-        <Link href={`/posts/${post.slug}`} className="text-xl font-bold leading-7">
+        <Link href={`/articles/${post.slug}`} className="text-xl font-bold leading-7">
             {post.title}
         </Link>
 
