@@ -61,7 +61,7 @@ export default function Portfolio({ projects }) {
                         disableOnInteraction: true, // اگر کاربر اسلایدر رو لمس کرد، autoplay متوقف نشه
                     }}
                     modules={[Autoplay]}
-                    spaceBetween={16}
+                    spaceBetween={40}
                     slidesPerView={1.2}
                     breakpoints={{
                         640: { slidesPerView: 1.5 },

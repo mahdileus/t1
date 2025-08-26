@@ -51,10 +51,10 @@ export default function LatestArticle({ posts }) {
                     </span>
 
                     <Link
-                        href="/"
+                        href="/posts"
                         className="flex group justify-between items-center py-2 px-2 hover:bg-gray-100 transition-all bg-[#f8f9fb] rounded-full gap-6"
                     >
-                        <p className="font-yekan-bakh text-lg">شروع کنید</p>
+                        <p className="font-yekan-bakh text-lg"> مشاهده همه</p>
                         <span className="w-8 h-8 relative bg-secondery rounded-full">
                             <HiOutlineArrowLongLeft
                                 size={40}
@@ -74,7 +74,7 @@ export default function LatestArticle({ posts }) {
         disableOnInteraction: true, // اگر کاربر اسلایدر رو لمس کرد، autoplay متوقف نشه
         }}
         modules={[Autoplay]}
-        spaceBetween={16}
+        spaceBetween={40}
         slidesPerView={1.2}
         breakpoints={{
           640: { slidesPerView: 1.5 },

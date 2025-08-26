@@ -26,7 +26,7 @@ const links = [
     },
     {
         name: "نمونه کار ها",
-        path: "/portfolio",
+        path: "/portfolios",
     },
     {
         name: "مقالات",

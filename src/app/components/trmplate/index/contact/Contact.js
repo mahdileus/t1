@@ -6,7 +6,7 @@ import { FaWhatsapp, FaInstagram, FaTelegramPlane } from "react-icons/fa";
 export default function Contact() {
     return (
         <div className="container">
-            <div className="bg-gray-100 flex flex-col md:flex-row items-center justify-center px-3 py-6 md:px-0 md:py-0 rounded-4xl">
+            <div className="bg-gray-100 flex flex-col md:flex-row items-center justify-center px-3 py-8 md:px-0 md:py-0 rounded-4xl 2xl:py-0 xl:py-8">
 
                 <div className="md:w-[45%] w-full">
                     <img

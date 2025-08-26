@@ -21,11 +21,9 @@ export default function ProjectCard({project}) {
             {project.title}
         </Link>
                 {/* توضیح کوتاه */}
-        <p className="text-sm text-gray-100 leading-6 line-clamp-4 text-justify">
+        <p className="text-sm  opacity-0 group-hover:opacity-100 transition-all leading-6 line-clamp-4 text-justify">
             {project.shortDescription}
-                    </p>
-
-
+        </p>
       </div>
 
     </div>

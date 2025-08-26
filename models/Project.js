@@ -5,6 +5,10 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  link: {
+    type: String,
+    required: true,
+  },
   slug: {
     type: String,
     required: true,
@@ -23,6 +27,14 @@ const projectSchema = new mongoose.Schema({
     required: true,
   },
   thumbnail: {
+    type: String,
+    required: true,
+  },
+    tags: {
+    type: [String],
+    required: true,
+  },
+    mainPicture: {
     type: String,
     required: true,
   },

@@ -1,5 +1,5 @@
 
-import ArticleModel from "../../../../../models/Article"
+import ProjectModel from "../../../../../models/Project"
 import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 import path from "path";
@@ -20,6 +20,7 @@ export async function PUT(req, { params }) {
   const updatedData = {
     title: formData.get("title"),
     slug: formData.get("slug"),
+    tags: formData.get("tags"),
     author: formData.get("author"),
     category: formData.get("category"),
     timeToRead: formData.get("timeToRead"),
@@ -48,7 +49,7 @@ const saveFile = async (file) => {
   }
 
 
-  await ArticleModel.findByIdAndUpdate(id, updatedData);
+  await ProjectModel.findByIdAndUpdate(id, updatedData);
 
   return NextResponse.json({ message: "مقاله با موفقیت بروزرسانی شد" }, { status: 200 });
 }
@@ -65,7 +66,7 @@ export async function DELETE(req, { params }) {
   }
 
   try {
-    await ArticleModel.findByIdAndDelete(id);
+    await ProjectModel.findByIdAndDelete(id);
     return NextResponse.json({ message: "article Removed Successfully :))" });
   } catch (err) {
     return NextResponse.json(
