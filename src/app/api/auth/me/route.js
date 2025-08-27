@@ -1,6 +1,6 @@
 import UserModel from "@/models/User";
 import connectToDB from "@/configs/db";
-import { verifyAccessToken } from "@/utils/auth-server";
+import { verifyAccessToken } from "../../../utils/auth-server";
 import { cookies } from "next/headers";
 
 export async function GET() {
