@@ -1,8 +1,8 @@
 
-import connectToDB from "../../../../configs/db";
+import connectToDB from "@/configs/db";
 
 
-import ProjectModel from "../../../../models/Project";
+import ProjectModel from "@/models/Project"
 import Navbar from "@/app/components/module/navbar/Navbar";
 import Footer from "@/app/components/module/footer/Footer";
 import Shape from "@/app/components/trmplate/index/shape/Shape";

@@ -3,7 +3,7 @@ import Navbar from "../components/module/navbar/Navbar";
 import Shape from "../components/trmplate/index/shape/Shape";
 import SEOProcess from "../components/trmplate/seo/Process";
 import SeoHeader from "../components/trmplate/seo/SeoHeader";
-import ProjectModel from "../../../models/Project"
+import ProjectModel from "@/models/Project"
 import FAQAccordion from "../components/trmplate/seo/FAQAccordion";
 import Portfolio from "../components/trmplate/seo/Portfolio";
 

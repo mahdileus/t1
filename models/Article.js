@@ -42,11 +42,6 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  score: {
-    type: Number,
-    Default: 5,
-  },
-
 },{ timestamps: true }
 );
 

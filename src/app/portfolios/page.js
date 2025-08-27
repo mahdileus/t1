@@ -1,7 +1,7 @@
 
 
-import ProjectModel from "../../../models/Project"
-import connectToDB from "../../../configs/db";
+import ProjectModel from "@/models/Project"
+import connectToDB from "@/configs/db";
 import { FaUserTie } from "react-icons/fa";
 import Footer from "../components/module/footer/Footer";
 import Navbar from "../components/module/navbar/Navbar";

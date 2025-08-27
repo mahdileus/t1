@@ -1,5 +1,5 @@
-import connectToDB from "../../../../configs/db";
-import ArticleModel from "../../../../models/Article"
+import connectToDB from "@/configs/db";
+import ArticleModel from "@/models/Article"
 import { writeFile } from "fs/promises";
 import path from "path";
 import slugify from "slugify";

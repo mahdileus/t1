@@ -93,4 +93,53 @@ font-style: normal;
   text-align: justify;
   text-align-last: center;
 }
+.swal-modal{
+  font-family: yekan-bakh !important;
+  border-radius: 25px !important;
+}
+.swal-title{
+  color: #173372 !important;
+}
+.swal-button{
+  background-color: #173372 !important;
+}
+.input {
+  @apply border border-gray-300 rounded-xl p-2 w-full focus:outline-none focus:ring-2 focus:ring-secondery text-sm;
+}
+.ck-content h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0.67em 0;
+}
+
+.ck-content h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.75em 0;
+}
+.ck-content h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.75em 0;
+}
+.rich-text h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.rich-text h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.rich-text h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.rich-text p {
+font-size: 16px;
+text-align: justify;
+}
+
 }

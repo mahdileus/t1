@@ -1,10 +1,10 @@
 
-import ProjectModel from "../../../../../models/Project"
+import ProjectModel from "@/models/Project"
 import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 import path from "path";
 import { writeFile } from "fs/promises";
-import connectToDB from "../../../../../configs/db";
+import connectToDB from "@/configs/db";
 
 export async function PUT(req, { params }) {
   await connectToDB();
@@ -20,10 +20,9 @@ export async function PUT(req, { params }) {
   const updatedData = {
     title: formData.get("title"),
     slug: formData.get("slug"),
+    link: formData.get("link"),
     tags: formData.get("tags"),
-    author: formData.get("author"),
     category: formData.get("category"),
-    timeToRead: formData.get("timeToRead"),
     longDescription: formData.get("longDescription"),
     shortDescription: formData.get("shortDescription"),
     tags: JSON.parse(formData.get("tags") || "[]"),
@@ -31,6 +30,7 @@ export async function PUT(req, { params }) {
 
   // ذخیره فایل‌ها در صورت ارسال فایل جدید
   const thumbnail = formData.get("thumbnail");
+  const mainPicture = formData.get("mainPicture");
 
 const uploadsPath = path.join(process.cwd(), "public", "uploads");
 
@@ -46,6 +46,9 @@ const saveFile = async (file) => {
 
   if (thumbnail && thumbnail.size > 0) {
     updatedData.thumbnail = await saveFile(thumbnail);
+  }
+  if (mainPicture && mainPicture.size > 0) {
+    updatedData.mainPicture = await saveFile(mainPicture);
   }
 
 
