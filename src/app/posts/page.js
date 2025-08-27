@@ -1,7 +1,7 @@
 
 
-import ArticleModel from "../../../models/Article"
-import connectToDB from "../../../configs/db";
+import ArticleModel from "@/models/Article"
+import connectToDB from "@/configs/db";
 import { CiFileOn } from "react-icons/ci";
 
 import Footer from "../components/module/footer/Footer";
