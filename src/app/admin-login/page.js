@@ -64,15 +64,11 @@ export default function Login() {
 
 
   return (
-    <>
-      
-        <>
 
-          {/* Left Side - Glass Box Form */}
-          <div className="flex items-center justify-center px-6 py-12 relative z-10 font-yekan-bakh">
-            <div className="w-full relative max-w-md bg-white/30 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-white/40 z-30">
-              <div className="absolute -top-20 -left-20 w-40 h-40 bg-secondery rounded-full animate-pulse -z-10 opacity-30"></div>
-              <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary rounded-full animate-pulse -z-10 opacity-30"></div>
+          <div className="flex items-center bg-[#7d9add75] justify-center min-h-screen px-6 relative z-10 font-yekan-bakh">
+            <div className="w-full relative max-w-md bg-white/40 backdrop:blur-3xl p-8 rounded-2xl shadow-xl border border-white/40 z-30">
+              <div className="absolute -top-20 -left-20 w-40 h-40 bg-secondery rounded-full animate-pulse -z-10 opacity-100"></div>
+              <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-primary rounded-full animate-pulse -z-10 opacity-100"></div>
               <h2 className="text-2xl font-bold text-primary text-center mb-8">ورود به حساب</h2>
               <form className="space-y-4">
                 <input
@@ -97,15 +93,11 @@ export default function Login() {
                 >
                   ورود
                 </button>
-                <Link href={"/"} className="text-sm text-center py-1 block text-secondery hover:underline cursor-pointer">
+                <Link href={"/"} className="text-sm text-center py-1 block text-primary hover:underline cursor-pointer">
                   لغو
                 </Link>
               </form>
             </div>
           </div>
-
-        </>
-
-    </>
   );
 }
