@@ -68,12 +68,21 @@ export default function PortfolioHead({ project }) {
             </div>
 
             {/* توضیح بلند */}
-            <div className="mt-8 rich-text">
+            <div className="mt-8 rich-text p-8 rounded-4xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-lg">
                 <div
                     dangerouslySetInnerHTML={{ __html: project.longDescription }}
-                    className="text-gray-700 leading-7 p-8 rounded-4xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-lg"
+                    className="text-gray-700 leading-7 "
                 />
-                {project.mainPicture}
+                <div>
+                    <Image
+                        src={project.mainPicture}
+                        alt={project.title}
+                        width={800}
+                        height={1200}
+                        className="rounded-xl shadow-md"
+                    />
+                </div>
+                
             </div>
         </div>
     );
