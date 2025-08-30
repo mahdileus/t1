@@ -159,7 +159,7 @@ export default function AddProject() {
     />
 
     <button className="bg-primary text-white py-3 rounded-xl cursor-pointer hover:bg-secondery transition text-base sm:text-lg">
-      ارسال مقاله
+      ارسال پروژه
     </button>
   </form>
 </section>

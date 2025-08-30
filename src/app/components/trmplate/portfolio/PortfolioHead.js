@@ -20,8 +20,8 @@ export default function PortfolioHead({ project }) {
                 {/* تصویر سمت راست */}
                 <div className="w-full md:w-[30%]">
                     <Image
-                        src={project.thumbnail}
-                        alt={project.title}
+                        src={project.thumbnail || "/images/fallback.webp"}
+                        alt={project.title || "تامنیل"}
                         width={400}
                         height={400}
                         className="rounded-xl shadow-md"
@@ -32,7 +32,7 @@ export default function PortfolioHead({ project }) {
                 <div className="w-full md:w-[70%] flex flex-col justify-between p-8 rounded-4xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-lg">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-bold text-primary mb-3">
-                            {project.title}
+                            {project.title || "عنوان مقاله"}
                         </h1>
                         <div className="flex items-center gap-2 bg-white p-2 rounded-full">
                             {categoryIcons[project.category] || categoryIcons.default}
@@ -75,7 +75,7 @@ export default function PortfolioHead({ project }) {
                 />
                 <div>
                     <Image
-                        src={project.mainPicture}
+                        src={project.mainPicture || "/images/fallback.webp"}
                         alt={project.title}
                         width={800}
                         height={1200}

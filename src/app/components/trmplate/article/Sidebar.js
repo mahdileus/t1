@@ -8,7 +8,7 @@ export default function SidebarArticles({ articles }) {
                 <div key={item._id}>
                     <div className="flex items-start gap-3">
                         <img
-                            src={item.thumbnail || "/default-thumbnail.jpg"}
+                            src={item.thumbnail || "/fallback.webp"}
                             alt={item.title}
                             className="w-20 h-20 object-cover rounded-md"
                         />

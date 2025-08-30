@@ -20,8 +20,6 @@ const Article = async ({ params }) => {
         .limit(4)
         .lean();
 
-
-
     return (
         <>
         <Shape/>

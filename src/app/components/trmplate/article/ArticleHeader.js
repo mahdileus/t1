@@ -34,7 +34,7 @@ export default function ArticleHeader({ article, articles }) {
 
         <div className="max-w-[1200px] mx-auto">
           <Image
-            src={article.mainPicture}
+            src={article.mainPicture || "/fallback.webp"}
             alt={article.title}
             width={400}
             height={450}
