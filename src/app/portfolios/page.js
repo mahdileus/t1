@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 
 
 import ProjectModel from "@/models/Project"

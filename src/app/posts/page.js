@@ -1,4 +1,4 @@
-
+export const dynamic = "force-dynamic";
 
 import ArticleModel from "@/models/Article"
 import connectToDB from "@/configs/db";

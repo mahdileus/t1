@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Navbar from "./components/module/navbar/Navbar";
 import AboutUs from "./components/trmplate/index/about-us/AboutUs";
 import Contact from "./components/trmplate/index/contact/Contact";
