@@ -48,7 +48,7 @@ const [projectInfo, setProjectInfo] = useState({
       });
     } else {
       Swal({
-        title: "خطا در ویرایش مفاله",
+        title: "خطا در ویرایش پروژه",
         icon: "error",
         buttons: "فهمیدم",
       });

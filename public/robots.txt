@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Block admin and private sections
+Disallow: /p-admin
+Disallow: /admin
+Disallow: /api
+Disallow: /auth
+Disallow: /tmp
+Disallow: /private
+Disallow: /_next
+Disallow: /node_modules
+Disallow: /mail
+
+# Note:
+# robots.txt فقط مسیرها رو می‌پذیره نه دامنه کامل
+# بنابراین خط زیر حذف یا اصلاح شد
+# Disallow: https://mail.t1w.ir/
+
+# Allow admin login explicitly
+Allow: /admin-login
+
+# Sitemap location
+Sitemap: https://t1w.ir/sitemap.xml

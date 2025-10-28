@@ -33,10 +33,15 @@ export default function Contact() {
                         <div className="flex flex-col items-center justify-between gap-3">
                             <h4 className="font-yekan-bakh text-gray-800 font-medium">راه های ارتباط باما </h4>
                             <div className="flex items-center justify-center text-2xl text-third gap-4 cursor-pointer">
+                                <a href="https://www.instagram.com/t1w.ir/"> 
                                 <FaInstagram className="hover:animate-bounce hover:transition-all" />
+                                </a>
+                               <a href="https://t.me/09125673763">
                                 <FaTelegramPlane className="hover:animate-bounce hover:transition-all" />
+                               </a>
+                               <a href="https://wa.me/09125673763">
                                 <FaWhatsapp className="hover:animate-bounce hover:transition-all" />
-
+                                </a>
                             </div>
                         </div>
                     </div>

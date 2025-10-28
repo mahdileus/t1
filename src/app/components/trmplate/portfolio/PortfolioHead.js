@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { FaTags,FaHtml5  } from "react-icons/fa";
+import { FaTags, FaHtml5 } from "react-icons/fa";
 import { CiFolderOn } from "react-icons/ci";
-import { TbSeo,TbWorldWww } from "react-icons/tb";
+import { TbSeo, TbWorldWww } from "react-icons/tb";
 
 export default function PortfolioHead({ project }) {
     // آیکون دسته بندی‌ها
@@ -73,16 +73,19 @@ export default function PortfolioHead({ project }) {
                     dangerouslySetInnerHTML={{ __html: project.longDescription }}
                     className="text-gray-700 leading-7 "
                 />
-                <div>
-                    <Image
-                        src={project.mainPicture || "/images/fallback.webp"}
-                        alt={project.title}
-                        width={800}
-                        height={1200}
-                        className="rounded-xl shadow-md"
-                    />
+                <div className="flex justify-center items-center h-screen">
+                    <div>
+                        <Image
+                            src={project.mainPicture || "/images/fallback.webp"}
+                            alt={project.title}
+                            width={800}
+                            height={1200}
+                            className="rounded-xl shadow-md"
+                        />
+                    </div>
                 </div>
-                
+
+
             </div>
         </div>
     );

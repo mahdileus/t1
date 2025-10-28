@@ -14,7 +14,7 @@ export default function HeroSection() {
                             <h4 className=" text-third text-center font-yekan-bakh text-lg md:text-xl py-1 px-4 border-t border-b"> اولیـــــــن قــــدم بــــــــرای موفقیــــــت آنـــــــــلاین </h4>
                         </span>
                         <h1 className=" text-third text-center text-6xl md:text-7xl font-bold font-yekan-bakh"> طراحی حرفه ای<br /> وب ســـــــــایت </h1>
-                        <Link href={"/"} className="flex justify-between group items-center hover:bg-black hover:border-black hover:text-white transition-all py-2 px-6 border-2 rounded-full gap-10">
+                        <Link href={"/web-design"} className="flex justify-between group items-center hover:bg-black hover:border-black hover:text-white transition-all py-2 px-6 border-2 rounded-full gap-10">
                             <p className="font-yekan-bakh text-lg ">شروع کنید</p>
                             <HiOutlineArrowLongLeft className="text-3xl group-hover:-translate-x-2 transition-all" />
                         </Link>

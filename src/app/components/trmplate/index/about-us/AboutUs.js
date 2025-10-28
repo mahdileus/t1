@@ -7,7 +7,7 @@ export default function AboutUs() {
                     <h4 className="font-arial text-3xl absolute -top-7 right-6 md:text-6xl font-extrabold text-secondery">T1</h4>
                     <span className=" font-yekan-bakh text-third text-2xl font-medium">
                         نمونه کارهای جدید <span className="text-black font-light text-xl">|</span>
-                        <span className="text-gray-600 text-base px-2">توضیحات کوتاه در رابطه با این بخش</span>
+                        <span className="text-gray-600 text-base px-2">بیش از صد آنلاین شاپ موفق همکار تیوان هستند</span>
                         <span className="bg-[#ecfcfc] p-1 text-sm rounded-full mx-4"><span className="text-[#39d4df] text-xl">10</span> سال تجربه</span>
                     </span>
                     <span className="inline-block font-yekan-bakh mt-6 text-justify text-sm md:text-base">

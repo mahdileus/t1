@@ -40,7 +40,7 @@ export default function MobileHeader({ isLogin }) {
 
                     <div className="flex items-center justify-center gap-3">
                         <div className="text-white font-yekan-bakh">
-                            <span className="block font-bold font-Yekan-Bakh">طراحی سایت</span>
+                            <span className="block font-bold font-Yekan-Bakh">آرین تجارت</span>
                             <span className="block font-bold text-center">تیوان</span>
                         </div>
 

@@ -39,7 +39,7 @@ export default function Footer() {
             </div>
             <div className="flex flex-col items-start justify-center text-right">
               <p className="font-medium text-primary text-lg">پشتیبانی واتساپ :</p>
-              <p className="text-primary text-2xl font-bold">021212151</p>
+              <a href="https://wa.me/09125673763" className="text-primary text-2xl font-bold">09125673763</a>
             </div>
           </div>
 
@@ -49,7 +49,8 @@ export default function Footer() {
             </div>
             <div className="flex flex-col items-start justify-center text-right">
               <p className="font-medium text-primary text-lg">شماره تماس :</p>
-              <p className="text-primary text-2xl font-bold">09123456789</p>
+              <a href="tel:02186097738" className="text-primary text-2xl font-bold">02186097738</a>
+              <a href="tel:09125673763" className="text-primary text-2xl font-bold">09125673763</a>
             </div>
           </div>
         </div>
@@ -73,21 +74,25 @@ export default function Footer() {
           <h4 className="font-bold text-xl text-primary">دسترسی سریع</h4>
           <ul className="space-y-2 text-md text-center md:text-right">
             <Link href={"/"} className="block">صفحه نخست</Link>
-            <Link href={"/courses"} className="block">نمونه کارها</Link>
+            <Link href={"/portfolios"} className="block">نمونه کارها</Link>
             <Link href={"/posts"} className="block">مقالات</Link>
             <Link href={"/about-us"} className="block">درباره ما</Link>
           </ul>
         </div>
         <div className="space-y-4 text-center md:text-right">
           <h4 className="font-bold text-xl text-center md:text-right text-primary">تماس باما</h4>
-          <div className="text-sm space-y-4">
-            <p className="text-base"><PiPhone size={24} className="inline ml-2 text-xl text-third" /> 0912345678</p>
+          <div className="text-sm ">
+            <a href="tel:09125673763" className="text-base"><PiPhone size={24} className="inline ml-2 text-xl text-third" /> 09125673763</a>
 
-            <p className="text-base"><PiClock size={24} className="inline ml-2 text-xl text-third" /> ساعت کاری از ساعت 8 صبح تا 10 شب </p>
+            <p className="text-base mt-2"><PiClock size={24} className="inline ml-2 text-xl text-third" /> ساعت کاری از ساعت 8 صبح تا 10 شب </p>
           </div>
           <div className="flex gap-4 mt-5 text-xl justify-center md:justify-start text-third">
+            <a href="https://www.instagram.com/t1w.ir/">            
             <PiInstagramLogo size={24} className="hover:text-[#3F72AF] cursor-pointer" />
-            <PiTelegramLogo size={24} className="hover:text-[#3F72AF] cursor-pointer" />
+            </a>
+            <a href="https://t.me/09125673763">
+                        <PiTelegramLogo size={24} className="hover:text-[#3F72AF] cursor-pointer" />
+            </a>
             <PiYoutubeLogo size={24} className="hover:text-[#3F72AF] cursor-pointer" />
           </div>
         </div>

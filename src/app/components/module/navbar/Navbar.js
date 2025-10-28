@@ -19,8 +19,8 @@ export default function Navbar() {
                     </svg>
                 </div>
                 <div className="text-primary font-yekan-bakh">
-                    <span className="block font-bold">طراحی</span>
-                    <span className="block font-bold">سایت</span>
+                    <span className="block font-bold"></span>
+                    <span className="block font-bold"> آرین تجارت</span>
                     <span className="block font-bold">تیوان</span>
                 </div>
                 <div className="lg:pr-2 xl:pr-8">
@@ -31,7 +31,8 @@ export default function Navbar() {
                 <div className="flex justify-between items-center gap-4">
                     <div className="flex flex-col justify-center">
                     <p className="text-secondery font-yekan-bakh bg-white text-center rounded-full  ">پشتیبانی</p>
-                    <p className="text-white font-yekan-bakh">۰۲۱۱۲۳۴۵۶۷</p>
+                    <a href="tel:02186097738 " className="text-white font-yekan-bakh">02186097738</a>
+                    <a href="tel:09125673763 " className="text-white font-yekan-bakh -mt-1">09125673763</a>
                     </div>
                     <div className="bg-white p-2.5 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">

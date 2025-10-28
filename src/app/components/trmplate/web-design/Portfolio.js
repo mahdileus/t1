@@ -83,7 +83,7 @@ export default function Portfolio({ projects }) {
 
             </div>
             <div className="flex justify-center items-center">
-                <Link href={"/portfolio"} className="flex justify-between items-center group hover:bg-black hover:border-black transition-all hover:text-white py-2 px-6 border-2 rounded-full gap-10">
+                <Link href={"/portfolios"} className="flex justify-between items-center group hover:bg-black hover:border-black transition-all hover:text-white py-2 px-6 border-2 rounded-full gap-10">
                     <p className="font-yekan-bakh text-lg ">پروژه های بیشتر را مشاهد کنید </p>
                     <HiOutlineArrowLongLeft className="text-3xl transition-all group-hover:-translate-x-2" />
                 </Link>
