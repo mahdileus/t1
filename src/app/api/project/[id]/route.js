@@ -12,21 +12,21 @@ export async function PUT(req, { params }) {
   const { id } = await params;
 
   if (!isValidObjectId(id)) {
-    return NextResponse.json({ message: "شناسه مقاله نامعتبر است!" }, { status: 422 });
+    return NextResponse.json({ message: "شناسه پروژه نامعتبر است!" }, { status: 422 });
   }
 
   const formData = await req.formData();
 
-  const updatedData = {
-    title: formData.get("title"),
-    slug: formData.get("slug"),
-    link: formData.get("link"),
-    tags: formData.get("tags"),
-    category: formData.get("category"),
-    longDescription: formData.get("longDescription"),
-    shortDescription: formData.get("shortDescription"),
-    tags: JSON.parse(formData.get("tags") || "[]"),
-  };
+const updatedData = {
+  title: formData.get("title"),
+  slug: formData.get("slug"),
+  link: formData.get("link"),
+  category: formData.get("category"),
+  longDescription: formData.get("longDescription"),
+  shortDescription: formData.get("shortDescription"),
+  tags: JSON.parse(formData.get("tags") || "[]"),
+};
+
 
   // ذخیره فایل‌ها در صورت ارسال فایل جدید
   const thumbnail = formData.get("thumbnail");
@@ -54,7 +54,7 @@ const saveFile = async (file) => {
 
   await ProjectModel.findByIdAndUpdate(id, updatedData);
 
-  return NextResponse.json({ message: "مقاله با موفقیت بروزرسانی شد" }, { status: 200 });
+  return NextResponse.json({ message: "پروژه با موفقیت بروزرسانی شد" }, { status: 200 });
 }
 export async function DELETE(req, { params }) {
   await connectToDB();

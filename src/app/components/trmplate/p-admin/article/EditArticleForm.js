@@ -70,7 +70,7 @@ const [articleInfo, setArticleInfo] = useState({
         <input className="input" type="text" placeholder=" نویسنده" value={articleInfo.author} onChange={(e) => setArticleInfo({ ...articleInfo, author: e.target.value })} />
         <input className="input" type="text" placeholder="دسته‌بندی" value={articleInfo.category} onChange={(e) => setArticleInfo({ ...articleInfo, category: e.target.value })} />
         <input className="input" type="number" placeholder="مدت زمان مطالعه (دقیقه)" value={articleInfo.timeToRead} onChange={(e) => setArticleInfo({ ...articleInfo, timeToRead: e.target.value })} />
-        <input className="input" type="number" placeholder=" توضیح کوتاه" value={articleInfo.shortDescription} onChange={(e) => setArticleInfo({ ...articleInfo, shortDescription: e.target.value })} />
+        <input className="input" type="text" placeholder=" توضیح کوتاه" value={articleInfo.shortDescription} onChange={(e) => setArticleInfo({ ...articleInfo, shortDescription: e.target.value })} />
       </div>
       <label className="font-medium text-primary">محتوای مقاله</label>
       <div className="overflow-x-auto">

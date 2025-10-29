@@ -67,7 +67,8 @@ const [projectInfo, setProjectInfo] = useState({
         <input className="input" type="text" placeholder="عنوان پروژه" value={projectInfo.title} onChange={(e) => setProjectInfo({ ...projectInfo, title: e.target.value })} />
         <input className="input" type="text" placeholder="نامک پروژه" value={projectInfo.slug} onChange={(e) => setProjectInfo({ ...projectInfo, slug: e.target.value })} />
         <input className="input" type="text" placeholder="دسته‌بندی" value={projectInfo.category} onChange={(e) => setProjectInfo({ ...projectInfo, category: e.target.value })} />
-        <input className="input" type="number" placeholder=" توضیح کوتاه" value={projectInfo.shortDescription} onChange={(e) => setProjectInfo({ ...projectInfo, shortDescription: e.target.value })} />
+        <input className="input" type="text" placeholder=" توضیح کوتاه" value={projectInfo.shortDescription} onChange={(e) => setProjectInfo({ ...projectInfo, shortDescription: e.target.value })} />
+        <input className="input" type="text" placeholder="  لینک" value={projectInfo.link} onChange={(e) => setProjectInfo({ ...projectInfo, link: e.target.value })} />
       </div>
       <label className="font-medium text-primary">محتوای پروژه</label>
       <div className="overflow-x-auto">
