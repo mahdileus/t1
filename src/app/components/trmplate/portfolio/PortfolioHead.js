@@ -73,7 +73,7 @@ export default function PortfolioHead({ project }) {
                     dangerouslySetInnerHTML={{ __html: project.longDescription }}
                     className="text-gray-700 leading-7 "
                 />
-                <div className="flex justify-center items-center h-screen">
+                <div className="flex justify-center items-center mt-5">
                     <div>
                         <Image
                             src={project.mainPicture || "/images/fallback.webp"}
