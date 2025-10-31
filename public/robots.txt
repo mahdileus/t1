@@ -12,9 +12,6 @@ Disallow: /_next
 Disallow: /node_modules
 Disallow: /mail
 
-# Note:
-# robots.txt فقط مسیرها رو می‌پذیره نه دامنه کامل
-# بنابراین خط زیر حذف یا اصلاح شد
 # Disallow: https://mail.t1w.ir/
 
 # Allow admin login explicitly
