@@ -8,6 +8,26 @@ import Services from "../components/trmplate/web-design/Services";
 import Portfolio from "../components/trmplate/web-design/Portfolio";
 import Process from "../components/trmplate/web-design/process";
 
+
+export const metadata = {
+  title: "طراحی سایت اختصاصی و حرفه‌ای | شرکت تیوان",
+  description:
+    "طراحی وبسایت اختصاصی، مدرن و واکنش‌گرا با تیوان. طراحی سایت شرکتی، فروشگاهی و شخصی با جدیدترین تکنولوژی‌های وب و تجربه کاربری قوی.",
+  keywords: [
+    "طراحی سایت اختصاصی",
+    "طراحی وبسایت شرکتی",
+    "طراحی سایت فروشگاهی",
+    "طراحی سایت حرفه‌ای",
+    "واکنش‌گرا",
+    "UI UX",
+    "وردپرس",
+    "Next.js",
+    "React",
+    "تیوان"
+  ],
+};
+
+
 export default async function page() {
 const projects = await ProjectModel.find({ category: "web-design" })
   .sort({ createdAt: -1 })

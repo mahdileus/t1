@@ -9,6 +9,20 @@ import Navbar from "../components/module/navbar/Navbar";
 import Shape from "../components/trmplate/index/shape/Shape";
 import Projects from "../components/trmplate/portfolio/Projects";
 
+export const metadata = {
+  title: "نمونه‌کارهای طراحی سایت و برنامه‌نویسی | شرکت تیوان",
+  description:
+    "نمونه‌کارهای موفق تیوان در طراحی سایت، برنامه‌نویسی اختصاصی، سئو و مارکتینگ دیجیتال برای برندهای ایران، کانادا و آلمان.",
+  keywords: [
+    "نمونه کار طراحی سایت",
+    "پروژه های تیوان",
+    "طراحی سایت اختصاصی",
+    "نمونه کار سئو",
+    "نمونه کار برنامه نویسی",
+    "Portfolio",
+    "تیوان"
+  ],
+};
 
 
 const PostsArchive = async () => {

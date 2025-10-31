@@ -8,6 +8,25 @@ import TechUseCases from "../components/trmplate/programming/TechUseCases";
 import FAQAccordion from "../components/trmplate/programming/FAQAccordion";
 import Portfolio from "../components/trmplate/programming/Portfolio";
 
+export const metadata = {
+  title: "برنامه‌نویسی اختصاصی وب و اپلیکیشن | شرکت تیوان",
+  description:
+    "توسعه وب و اپلیکیشن‌های اختصاصی با تیوان. برنامه‌نویسی با Next.js، Node.js، Laravel، React و APIهای حرفه‌ای برای پروژه‌های سازمانی و استارتاپی.",
+  keywords: [
+    "برنامه نویسی اختصاصی",
+    "توسعه وب",
+    "توسعه اپلیکیشن",
+    "Next.js",
+    "React",
+    "Node.js",
+    "Laravel",
+    "API نویسی",
+    "طراحی سیستم اختصاصی",
+    "تیوان"
+  ],
+};
+
+
 export default async function page() {
 const projects = await ProjectModel.find({ category: "programming" })
   .sort({ createdAt: -1 })

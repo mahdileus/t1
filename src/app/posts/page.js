@@ -9,6 +9,20 @@ import Navbar from "../components/module/navbar/Navbar";
 import Posts from "../components/trmplate/Posts/Posts";
 import Shape from "../components/trmplate/index/shape/Shape";
 
+export const metadata = {
+  title: "مقالات آموزشی طراحی سایت، سئو و دیجیتال مارکتینگ | تیوان",
+  description:
+    "جدیدترین مقالات آموزشی در زمینه طراحی سایت، سئو، برنامه‌نویسی و رشد برند در فضای دیجیتال. مطالب کاربردی از تیم تیوان.",
+  keywords: [
+    "مقالات طراحی سایت",
+    "آموزش سئو",
+    "دیجیتال مارکتینگ",
+    "آموزش برنامه نویسی",
+    "محتوای آموزشی وب",
+    "وبلاگ تیوان",
+    "تیوان"
+  ],
+};
 
 
 const PostsArchive = async () => {
