@@ -29,7 +29,7 @@ export const metadata = {
 
 
 export default async function page() {
-const projects = await ProjectModel.find({ category: "web-design" })
+const projects = await ProjectModel.find({ category: "طراحی سایت" })
   .sort({ createdAt: -1 })
   .limit(8);
 

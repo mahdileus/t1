@@ -28,7 +28,7 @@ export const metadata = {
 
 
 export default async function page() {
-const projects = await ProjectModel.find({ category: "seo" })
+const projects = await ProjectModel.find({ category: "سئو" })
   .sort({ createdAt: -1 })
   .limit(8);
 
