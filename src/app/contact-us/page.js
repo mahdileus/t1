@@ -25,7 +25,6 @@ const ContactUs =  () => {
     <Shape/>
     <Navbar/>
     <MapBox/>
-    
     <Footer/>
     </>
   );

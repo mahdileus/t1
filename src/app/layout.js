@@ -33,6 +33,7 @@ description: "شرکت آرین تجارت تیوان ارائه‌دهنده خ
       "طراحی وبسایت اختصاصی، سئو حرفه‌ای و تبلیغات دیجیتال با تیوان.",
   },
 };
+export const dynamic = 'force-dynamic';
 
 export default function RootLayout({ children }) {
   return (
