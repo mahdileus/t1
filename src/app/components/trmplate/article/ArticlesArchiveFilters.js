@@ -64,7 +64,7 @@ export default function ArticlesArchiveFilters({
           <select
             value={activeFilters?.category || ""}
             onChange={(e) => updateFilter("category", e.target.value)}
-            className="h-14 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-[var(--color-secondery)] outline-none"
+            className="h-14 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-primary outline-none"
           >
             <option value="">همه دسته‌بندی‌ها</option>
             {categories.map((cat) => (
@@ -80,7 +80,7 @@ export default function ArticlesArchiveFilters({
           <select
             value={activeFilters?.sort || "newest"}
             onChange={(e) => updateFilter("sort", e.target.value)}
-            className="h-14 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-[var(--color-secondery)] outline-none"
+            className="h-14 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-primary outline-none"
           >
             <option value="newest">جدیدترین</option>
             <option value="oldest">قدیمی‌ترین</option>
@@ -93,7 +93,7 @@ export default function ArticlesArchiveFilters({
         <div className="md:col-span-1">
           <button
             onClick={resetFilters}
-            className="h-14 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-500 transition hover:border-orange-200 hover:text-orange-400"
+            className="h-14 w-full rounded-2xl bg-secondery px-4 cursor-pointer text-sm font-medium text-white  hover:text-orange-400 hover:bg-white hover:border hover:border-secondery transition-all "
           >
             پاک
           </button>

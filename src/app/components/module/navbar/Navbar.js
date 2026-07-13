@@ -30,11 +30,11 @@ export default function Navbar() {
             <div  >
                 <div className="flex justify-between items-center gap-4">
                     <div className="flex flex-col justify-center">
-                    <p className="text-secondery font-yekan-bakh bg-white text-center rounded-full  ">پشتیبانی</p>
+                    <p className="text-secondery font-yekan-bakh bg-white text-center rounded-full animate-pulse  ">پشتیبانی</p>
                     <a href="tel:02186097738 " className="text-white font-yekan-bakh">02186097738</a>
                     <a href="tel:09125673763 " className="text-white font-yekan-bakh -mt-1">09125673763</a>
                     </div>
-                    <div className="bg-white p-2.5 rounded-full">
+                    <div className="bg-white p-2.5 rounded-full animate-bounce">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                             <g id="Iconly_Bulk_Calling" data-name="Iconly/Bulk/Calling" transform="translate(-2 -2)">
                                 <g id="Group" transform="translate(13 2)" opacity="0.4">
