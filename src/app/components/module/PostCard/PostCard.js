@@ -6,7 +6,7 @@ export default function PostCard({post}) {
     <div className="relative w-70 h-[400px] font-yekan-bakh rounded-3xl overflow-hidden shadow-lg group">
       {/* تصویر پس‌زمینه */}
       <img
-        src={post.thumbnail}
+        src={post.cover}
         alt="article"
         className="absolute inset-0 w-full h-full object-cover"
       />

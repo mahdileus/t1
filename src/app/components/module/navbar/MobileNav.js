@@ -30,7 +30,7 @@ const links = [
     },
     {
         name: "مقالات",
-        path: "/posts",
+        path: "/articles",
     },
     {
         name: "درباره ما",

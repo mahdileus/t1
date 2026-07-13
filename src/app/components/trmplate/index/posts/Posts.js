@@ -51,7 +51,7 @@ export default function LatestArticle({ posts }) {
                     </span>
 
                     <Link
-                        href="/posts"
+                        href="/articles"
                         className="flex group justify-between items-center py-2 px-2 hover:bg-gray-100 transition-all bg-[#f8f9fb] rounded-full gap-6"
                     >
                         <p className="font-yekan-bakh text-lg"> مشاهده همه</p>

@@ -4,6 +4,7 @@ import { IoCodeWorking } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import SidebarItem from "./SidebarItem";
+import { BiCategoryAlt } from "react-icons/bi";
 
 
 
@@ -30,7 +31,8 @@ export default function Sidebar() {
         <div className="flex flex-col gap-4">
 
           <SidebarItem icon={<IoCodeWorking className="w-8 h-8" />} label="نمونه کار" href="/p-admin/portfolio" />
-          <SidebarItem icon={<CiFileOn className="w-8 h-8" />} label="مقالات" href="/p-admin/posts" />
+          <SidebarItem icon={<CiFileOn className="w-8 h-8" />} label="مقالات" href="/p-admin/articles" />
+          <SidebarItem icon={<BiCategoryAlt  className="w-8 h-8" />} label="دسته بندی مقالات " href="/p-admin/articles/categories" />
 
         </div>
       </nav>
