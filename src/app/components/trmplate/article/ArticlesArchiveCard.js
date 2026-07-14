@@ -44,7 +44,7 @@ export default function ArticlesArchiveCard({ article }) {
       </div>
 
       <div className="p-5">
-        <h2 className="line-clamp-2 text-lg font-bold leading-8 text-[var(--color-secondery)] transition group-hover:text-orange-400">
+        <h2 className="line-clamp-2 text-lg font-bold leading-8 text-primary transition group-hover:text-orange-400">
           {article.title}
         </h2>
 

@@ -43,7 +43,7 @@ export default function ArticleHeader({ article }) {
             </div>
           ) : null}
 
-          <h1 className="text-3xl font-extrabold leading-[2.6rem] tracking-tight text-[var(--color-secondery)] md:text-6xl md:leading-[5rem]">
+          <h1 className="text-3xl font-extrabold leading-[2.6rem] tracking-tight text-primary md:text-6xl md:leading-[5rem]">
             {article.title}
           </h1>
 
@@ -96,7 +96,7 @@ export default function ArticleHeader({ article }) {
       text-justify
       text-[15px]
       leading-9
-      text-[var(--color-secondery)]
+      text-slate-600
       md:text-[17px]
       md:leading-10
     "
