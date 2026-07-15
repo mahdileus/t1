@@ -5,30 +5,42 @@ class MyUploadAdapter {
   }
 
   async upload() {
-    const file = await this.loader.file;
+    try {
+      const file = await this.loader.file;
 
-    const formData = new FormData();
-    formData.append("file", file);
+      if (!file) {
+        throw new Error("فایلی برای آپلود انتخاب نشده است");
+      }
 
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-      signal: this.controller.signal,
-    });
+      const formData = new FormData();
+      formData.append("file", file);
 
-    if (!response.ok) {
-      throw new Error("خطا در آپلود تصویر");
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+        signal: this.controller.signal,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result?.message || "خطا در آپلود تصویر");
+      }
+
+      if (!result?.url) {
+        throw new Error("آدرس تصویر از سرور دریافت نشد");
+      }
+
+      return {
+        default: result.url,
+      };
+    } catch (error) {
+      if (error.name === "AbortError") {
+        throw new Error("آپلود تصویر لغو شد");
+      }
+
+      throw new Error(error.message || "خطا در آپلود تصویر");
     }
-
-    const data = await response.json();
-
-    if (!data?.url) {
-      throw new Error("آدرس تصویر از سرور دریافت نشد");
-    }
-
-    return {
-      default: data.url,
-    };
   }
 
   abort() {

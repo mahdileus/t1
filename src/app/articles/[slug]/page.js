@@ -8,6 +8,7 @@ import Shape from "@/app/components/trmplate/index/shape/Shape";
 import connectToDB from "@/configs/db";
 import ArticleModel from "@/models/Article";
 import { notFound } from 'next/navigation';
+import ArticleCategory from "@/models/ArticleCategory";
 
 
 export async function generateMetadata({ params }) {
