@@ -1,6 +1,11 @@
+
 import connectToDB from "@/configs/db";
 import Article from "@/models/Article";
 import Project from "@/models/Project";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 
 const siteUrl = "https://t1w.ir";
 
