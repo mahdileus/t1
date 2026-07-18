@@ -1,39 +1,80 @@
 import CommentBox from "@/app/components/module/commentbox/CommentBox";
-import { PiDotsNineThin } from "react-icons/pi";
 import { BiSolidQuoteLeft } from "react-icons/bi";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { PiDotsNineThin } from "react-icons/pi";
 
 export default function Comments() {
   return (
-    <div className="py-20 container font-yekan-bakh relative">
-      <BiSolidQuoteLeft className="absolute right-0 -top-16 text-[300px] rotate-12 text-gray-200" />
+    <section
+      className="container relative py-16 font-yekan-bakh md:py-24"
+      aria-labelledby="comments-title"
+    >
+      <BiSolidQuoteLeft
+        className="pointer-events-none absolute -top-12 right-0 -z-10 rotate-12 text-[180px] text-gray-100 md:-top-16 md:text-[300px]"
+        aria-hidden="true"
+      />
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative">
-
-        {/* ستون عنوان سمت راست */}
-        <div className="flex flex-col gap-4 w-full">
-          <PiDotsNineThin className="text-6xl font-light text-gray-400" />
-          <h2 className="text-3xl font-bold text-primary">نظرات مشتریان</h2>
-          <p> نظرات مشتریان عزیز همیشه برای تیوان دارای اولویت بوده و همواره میکوشد تا خدمات خود را به نحو احسنت در خدمت کارفرمایان عزیز قرار دهد  </p>
-        </div>
-
-        {/* دکمه‌های ناوبری در وسط */}
-        <div className="flex flex-col items-center border border-primary rounded-full my-6 md:my-0">
-          <div className="swiper-button-prev-custom cursor-pointer text-primary rounded-full p-2 transition-all">
-            <MdKeyboardArrowUp size={20} />
-          </div>
-          <div className="swiper-button-next-custom cursor-pointer  text-primary rounded-full p-2 transition-all">
-            <MdKeyboardArrowDown size={20} />
-          </div>
-        </div>
-
-        {/* اسلایدر سمت چپ */}
+      <div className="relative grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.25fr)] lg:gap-12">
         <div className="w-full">
+          <PiDotsNineThin
+            className="mb-3 text-5xl font-light text-gray-400 md:text-6xl"
+            aria-hidden="true"
+          />
+
+          <h2
+            id="comments-title"
+            className="text-3xl font-extrabold leading-relaxed text-primary md:text-4xl"
+          >
+            نظرات مشتریان
+          </h2>
+
+          <p className="mt-4 max-w-xl text-justify text-sm leading-8 text-gray-600 md:text-base md:leading-9">
+            نظرات مشتریان عزیز همیشه برای تیوان دارای اولویت بوده و همواره
+            می‌کوشیم خدمات خود را به بهترین شکل در اختیار کارفرمایان عزیز قرار
+            دهیم.
+          </p>
+        </div>
+
+        <div
+          className="flex w-fit flex-row items-center rounded-full border border-primary/30 bg-white p-1 shadow-sm md:flex-col"
+          aria-label="کنترل نظرات مشتریان"
+        >
+          <button
+            id="comments-slider-prev"
+            type="button"
+            className="flex size-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            aria-label="مشاهده نظر قبلی"
+          >
+            <MdKeyboardArrowUp
+              className="-rotate-90 md:rotate-0"
+              size={22}
+              aria-hidden="true"
+            />
+          </button>
+
+          <span
+            className="h-6 w-px bg-primary/20 md:h-px md:w-6"
+            aria-hidden="true"
+          />
+
+          <button
+            id="comments-slider-next"
+            type="button"
+            className="flex size-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            aria-label="مشاهده نظر بعدی"
+          >
+            <MdKeyboardArrowDown
+              className="-rotate-90 md:rotate-0"
+              size={22}
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+
+        <div className="min-w-0">
           <CommentBox />
         </div>
-
       </div>
-    </div>
-
-  )
+    </section>
+  );
 }

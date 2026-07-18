@@ -1,5 +1,13 @@
 "use client";
-import { FaHtml5, FaJs, FaPhp, FaLaravel, FaReact, FaNodeJs } from "react-icons/fa";
+
+import {
+  FaHtml5,
+  FaJs,
+  FaPhp,
+  FaLaravel,
+  FaReact,
+  FaNodeJs,
+} from "react-icons/fa";
 import { SiTailwindcss, SiNextdotjs } from "react-icons/si";
 import { TfiAndroid } from "react-icons/tfi";
 
@@ -9,31 +17,31 @@ const items = [
   { icon: FaJs, label: "JavaScript", color: "#f7df1e" },
   { icon: FaPhp, label: "PHP", color: "#777bb4" },
   { icon: FaLaravel, label: "Laravel", color: "#ff2d20" },
-  { icon: FaReact, label: "ReactJS", color: "#61dafb" },
-  { icon: SiNextdotjs, label: "NextJS", color: "#000000" },
-  { icon: FaNodeJs, label: "NodeJS", color: "#68a063" },
+  { icon: FaReact, label: "ReactJS", color: "#0ea5e9" },
+  { icon: SiNextdotjs, label: "NextJS", color: "#111827" },
+  { icon: FaNodeJs, label: "NodeJS", color: "#3c873a" },
   { icon: TfiAndroid, label: "Android", color: "#3ddc84" },
 ];
 
 export default function GlassIconGrid() {
   return (
-    <div className="w-full min-h-[60vh] flex items-center justify-center p-6">
-      <div className="grid grid-cols-3 gap-4 max-w-[720px] w-full">
-        {items.map(({ icon: Icon, label, color }, i) => (
+    <div className="flex min-h-[320px] w-full items-center justify-center md:min-h-[420px]">
+      <div className="grid w-full max-w-[560px] grid-cols-3 gap-3 sm:gap-4">
+        {items.map(({ icon: Icon, label, color }) => (
           <div
-            key={i}
-            className="aspect-square rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-lg
-                       flex flex-col items-center justify-center
-                       transition-transform duration-200 hover:-translate-y-1 hover:shadow-2xl
-                       group p-4"
+            key={label}
             aria-label={label}
             title={label}
+            className="group flex aspect-square min-h-[92px] flex-col items-center justify-center rounded-2xl border border-gray-100 bg-white/70 p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:bg-white hover:shadow-lg hover:shadow-primary/10 sm:min-h-[120px] sm:p-4"
           >
             <Icon
-              className="w-11 h-11 mb-2 transition-transform duration-200 group-hover:scale-110"
+              className="mb-2 size-9 transition-transform duration-300 group-hover:scale-110 sm:size-11"
               style={{ color }}
             />
-            <span className="text-sm text-slate-900">{label}</span>
+
+            <span className="max-w-full truncate text-center text-xs font-medium text-gray-700 sm:text-sm">
+              {label}
+            </span>
           </div>
         ))}
       </div>

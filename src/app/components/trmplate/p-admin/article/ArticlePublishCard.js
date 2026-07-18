@@ -11,6 +11,7 @@ export default function ArticlePublishCard({
     <section className="sticky top-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="mb-5">
         <h2 className="text-lg font-bold text-slate-800">انتشار</h2>
+
         <p className="mt-1 text-sm text-slate-500">
           وضعیت و زمان انتشار مقاله را مشخص کنید.
         </p>
@@ -18,8 +19,9 @@ export default function ArticlePublishCard({
 
       <div className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
         <p className="text-xs text-slate-400">عنوان مقاله</p>
+
         <p className="mt-1 line-clamp-2 font-semibold text-slate-800">
-          {pageTitle}
+          {pageTitle || formData?.title || "بدون عنوان"}
         </p>
       </div>
 
@@ -28,8 +30,9 @@ export default function ArticlePublishCard({
           <label className="mb-2 block text-sm font-medium text-slate-700">
             وضعیت
           </label>
+
           <select
-            value={formData.status}
+            value={formData?.status || "draft"}
             onChange={(e) => onChange("status", e.target.value)}
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-400"
           >
@@ -43,14 +46,17 @@ export default function ArticlePublishCard({
           <label className="mb-2 block text-sm font-medium text-slate-700">
             تاریخ انتشار
           </label>
+
           <input
             type="datetime-local"
-            value={formData.publishedAt}
+            value={formData?.publishedAt || ""}
             onChange={(e) => onChange("publishedAt", e.target.value)}
             className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
           />
-          <p className="mt-1 text-xs text-slate-400">
-            اگر وضعیت روی "منتشر شده" باشد، در صورت خالی بودن، API می‌تواند تاریخ را خودکار ثبت کند.
+
+          <p className="mt-1 text-xs leading-5 text-slate-400">
+            اگر وضعیت روی «منتشر شده» باشد، در صورت خالی بودن، API می‌تواند
+            تاریخ را خودکار ثبت کند.
           </p>
         </div>
 

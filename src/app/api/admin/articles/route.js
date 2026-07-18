@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
-import slugify from "slugify";
 
 import connectToDB from "@/configs/db";
 import ArticleModel from "@/models/Article";
@@ -8,7 +7,7 @@ import ArticleCategory from "@/models/ArticleCategory";
 import { authAdmin } from "@/app/utils/auth-server";
 import { uploadImage } from "@/app/utils/uploadFile";
 
-
+export const dynamic = "force-dynamic";
 
 function successResponse(payload = {}, status = 200) {
   return NextResponse.json(payload, { status });
@@ -34,17 +33,26 @@ function normalizeString(value) {
   return String(value || "").trim();
 }
 
+function normalizeLowerString(value) {
+  return normalizeString(value).toLowerCase();
+}
+
 function normalizeSlug(value, fallback = "") {
-  return slugify(String(value || fallback || ""), {
-    lower: true,
-    strict: true,
-    trim: true,
-  });
+  const source = normalizeString(value || fallback);
+
+  return source
+    .toLowerCase()
+    .trim()
+    .replace(/['"]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/[^\p{L}\p{N}\-_]+/gu, "")
+    .replace(/^-+|-+$/g, "");
 }
 
 function safeJsonParse(value, fallback) {
   try {
-    if (!value) return fallback;
+    if (value === null || value === undefined || value === "") return fallback;
     return JSON.parse(value);
   } catch {
     return fallback;
@@ -53,18 +61,193 @@ function safeJsonParse(value, fallback) {
 
 function normalizeStringArray(input) {
   if (!Array.isArray(input)) return [];
-  return input
-    .map((item) => String(item || "").trim())
-    .filter(Boolean);
+
+  return [
+    ...new Set(
+      input
+        .map((item) => String(item || "").trim())
+        .filter(Boolean)
+    ),
+  ];
 }
 
-function normalizeStatus(status) {
-  const allowed = ["draft", "published", "archived"];
-  return allowed.includes(status) ? status : "draft";
+function normalizeObjectIdArray(input) {
+  if (!Array.isArray(input)) return [];
+
+  return [
+    ...new Set(
+      input
+        .map((item) => String(item || "").trim())
+        .filter((item) => mongoose.Types.ObjectId.isValid(item))
+    ),
+  ];
+}
+
+function normalizeBoolean(value, defaultValue = false) {
+  if (value === null || value === undefined || value === "") return defaultValue;
+
+  if (typeof value === "boolean") return value;
+
+  const normalized = String(value).toLowerCase().trim();
+
+  if (["true", "1", "yes", "on"].includes(normalized)) return true;
+  if (["false", "0", "no", "off"].includes(normalized)) return false;
+
+  return defaultValue;
+}
+
+function normalizeNumber(value, defaultValue = 0) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : defaultValue;
+}
+
+function normalizeNullableNumber(value) {
+  if (value === null || value === undefined || value === "") return null;
+
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function normalizeDate(value) {
+  const raw = normalizeString(value);
+  if (!raw) return null;
+
+  const date = new Date(raw);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function isPlainObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isFileLike(file) {
+  return (
+    file &&
+    typeof file === "object" &&
+    typeof file.size === "number" &&
+    typeof file.arrayBuffer === "function"
+  );
+}
+
+function hasValidFile(file) {
+  return isFileLike(file) && file.size > 0;
 }
 
 function buildCanonicalUrl(slug) {
   return `/articles/${slug}`;
+}
+
+function stripHtml(value) {
+  return String(value || "")
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function calculateWordCount(content) {
+  const text = stripHtml(content);
+  if (!text) return 0;
+
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
+function calculateReadingTime(content) {
+  const words = calculateWordCount(content);
+  if (!words) return 1;
+
+  return Math.max(Math.ceil(words / 200), 1);
+}
+
+function clampNumber(value, min, max, defaultValue) {
+  const number = normalizeNumber(value, defaultValue);
+  return Math.min(Math.max(number, min), max);
+}
+
+function normalizeStatus(status) {
+  const allowed = ["draft", "review", "scheduled", "published", "archived"];
+  return allowed.includes(status) ? status : "draft";
+}
+
+function normalizeContentType(value) {
+  const allowed = ["html", "markdown", "json"];
+  return allowed.includes(value) ? value : "html";
+}
+
+function normalizeSearchIntent(value) {
+  const allowed = ["", "informational", "commercial", "transactional", "navigational"];
+  return allowed.includes(value) ? value : "";
+}
+
+function normalizeMaxImagePreview(value) {
+  const allowed = ["none", "standard", "large"];
+  return allowed.includes(value) ? value : "large";
+}
+
+function normalizeOgType(value) {
+  const allowed = ["article", "website"];
+  return allowed.includes(value) ? value : "article";
+}
+
+function normalizeTwitterCard(value) {
+  const allowed = ["summary", "summary_large_image"];
+  return allowed.includes(value) ? value : "summary_large_image";
+}
+
+function normalizeSitemapChangefreq(value) {
+  const allowed = ["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"];
+  return allowed.includes(value) ? value : "weekly";
+}
+
+function normalizeSchemaType(value) {
+  const allowed = ["Article", "BlogPosting", "NewsArticle"];
+  return allowed.includes(value) ? value : "BlogPosting";
+}
+
+function normalizeFaqs(input) {
+  if (!Array.isArray(input)) return [];
+
+  return input
+    .map((item, index) => ({
+      question: normalizeString(item?.question).slice(0, 300),
+      answer: normalizeString(item?.answer),
+      isActive: normalizeBoolean(item?.isActive, true),
+      order: normalizeNumber(item?.order, index),
+    }))
+    .filter((item) => item.question && item.answer);
+}
+
+function normalizeAlternateUrls(input) {
+  if (!Array.isArray(input)) return [];
+
+  return input
+    .map((item) => ({
+      lang: normalizeLowerString(item?.lang),
+      url: normalizeString(item?.url),
+    }))
+    .filter((item) => item.lang && item.url);
+}
+
+function normalizeObjectId(value) {
+  const id = normalizeString(value);
+  return mongoose.Types.ObjectId.isValid(id) ? id : null;
+}
+
+function validateLength(value, max, message) {
+  if (normalizeString(value).length > max) {
+    return message;
+  }
+
+  return null;
+}
+
+async function uploadOptionalImage(file, folder) {
+  if (!hasValidFile(file)) return "";
+
+  const url = await uploadImage(file, folder);
+  return url || "";
 }
 
 // POST /api/admin/articles
@@ -73,6 +256,7 @@ export async function POST(req) {
     await connectToDB();
 
     const admin = await requireAdmin();
+
     if (!admin) {
       return errorResponse("دسترسی غیرمجاز است", 401);
     }
@@ -84,27 +268,127 @@ export async function POST(req) {
     const slug = normalizeSlug(rawSlug, title);
 
     const category = normalizeString(formData.get("category"));
+    const author = normalizeObjectId(formData.get("author"));
     const authorName = normalizeString(formData.get("authorName"));
+    const authorSlug = normalizeSlug(formData.get("authorSlug"), authorName);
+
     const excerpt = normalizeString(formData.get("excerpt"));
     const content = normalizeString(formData.get("content"));
+    const contentType = normalizeContentType(normalizeString(formData.get("contentType")));
 
-    const readingTime = Number(formData.get("readingTime"));
     const status = normalizeStatus(normalizeString(formData.get("status")));
+    const isFeatured = normalizeBoolean(formData.get("isFeatured"), false);
 
     const tags = normalizeStringArray(safeJsonParse(formData.get("tags"), []));
-    const metaKeywords = normalizeStringArray(
-      safeJsonParse(formData.get("metaKeywords"), tags)
+    const focusKeyword = normalizeString(formData.get("focusKeyword"));
+    const secondaryKeywords = normalizeStringArray(
+      safeJsonParse(formData.get("secondaryKeywords"), [])
+    );
+    const searchIntent = normalizeSearchIntent(
+      normalizeString(formData.get("searchIntent"))
     );
 
+    const readingTimeInput = normalizeNumber(formData.get("readingTime"), 0);
+    const readingTime =
+      readingTimeInput >= 1 ? readingTimeInput : calculateReadingTime(content);
+
+    const wordCountInput = normalizeNumber(formData.get("wordCount"), 0);
+    const wordCount = wordCountInput > 0 ? wordCountInput : calculateWordCount(content);
+
+    const viewCount = Math.max(normalizeNumber(formData.get("viewCount"), 0), 0);
+    const commentCount = Math.max(normalizeNumber(formData.get("commentCount"), 0), 0);
+
     const metaTitle = normalizeString(formData.get("metaTitle")) || title;
-    const metaDescription =
-      normalizeString(formData.get("metaDescription")) || excerpt;
+
+    // مهم:
+    // metaDescription عمداً از excerpt پر نمی‌شود.
+    // اگر در پنل خالی ارسال شود، خالی ذخیره می‌شود.
+    const metaDescription = normalizeString(formData.get("metaDescription"));
 
     const canonicalUrl =
       normalizeString(formData.get("canonicalUrl")) || buildCanonicalUrl(slug);
 
+    const noIndex = normalizeBoolean(formData.get("noIndex"), false);
+    const noFollow = normalizeBoolean(formData.get("noFollow"), false);
+    const noArchive = normalizeBoolean(formData.get("noArchive"), false);
+    const noSnippet = normalizeBoolean(formData.get("noSnippet"), false);
+    const maxSnippet = normalizeNumber(formData.get("maxSnippet"), -1);
+    const maxImagePreview = normalizeMaxImagePreview(
+      normalizeString(formData.get("maxImagePreview"))
+    );
+    const maxVideoPreview = normalizeNumber(formData.get("maxVideoPreview"), -1);
+
+    const ogTitle = normalizeString(formData.get("ogTitle"));
+    const ogDescription = normalizeString(formData.get("ogDescription"));
+    const ogImageAlt = normalizeString(formData.get("ogImageAlt"));
+    const ogType = normalizeOgType(normalizeString(formData.get("ogType")));
+
+    const twitterTitle = normalizeString(formData.get("twitterTitle"));
+    const twitterDescription = normalizeString(formData.get("twitterDescription"));
+    const twitterImageAlt = normalizeString(formData.get("twitterImageAlt"));
+    const twitterCard = normalizeTwitterCard(
+      normalizeString(formData.get("twitterCard"))
+    );
+
+    const includeInSitemapRaw = normalizeBoolean(
+      formData.get("includeInSitemap"),
+      true
+    );
+    const includeInSitemap = noIndex ? false : includeInSitemapRaw;
+
+    const sitemapPriority = clampNumber(
+      formData.get("sitemapPriority"),
+      0,
+      1,
+      0.7
+    );
+    const sitemapChangefreq = normalizeSitemapChangefreq(
+      normalizeString(formData.get("sitemapChangefreq"))
+    );
+
+    const schemaType = normalizeSchemaType(normalizeString(formData.get("schemaType")));
     const seoSchema = safeJsonParse(formData.get("seoSchema"), {});
-    const viewCount = Number(formData.get("viewCount")) || 0;
+
+    const faqs = normalizeFaqs(safeJsonParse(formData.get("faqs"), []));
+    const alternateUrls = normalizeAlternateUrls(
+      safeJsonParse(formData.get("alternateUrls"), [])
+    );
+
+    const relatedArticles = normalizeObjectIdArray(
+      safeJsonParse(formData.get("relatedArticles"), [])
+    );
+    const pillarArticle = normalizeObjectId(formData.get("pillarArticle"));
+
+    const topicCluster = normalizeString(formData.get("topicCluster"));
+    const language = normalizeLowerString(formData.get("language")) || "fa";
+
+    const headingCount = Math.max(normalizeNumber(formData.get("headingCount"), 0), 0);
+    const imageCount = Math.max(normalizeNumber(formData.get("imageCount"), 0), 0);
+    const internalLinkCount = Math.max(
+      normalizeNumber(formData.get("internalLinkCount"), 0),
+      0
+    );
+    const externalLinkCount = Math.max(
+      normalizeNumber(formData.get("externalLinkCount"), 0),
+      0
+    );
+    const seoScore = clampNumber(formData.get("seoScore"), 0, 100, 0);
+    const readabilityScore = clampNumber(
+      formData.get("readabilityScore"),
+      0,
+      100,
+      0
+    );
+
+    const scheduledAt = normalizeDate(formData.get("scheduledAt"));
+    const contentUpdatedAt = normalizeDate(formData.get("contentUpdatedAt"));
+    const lastReviewedAt = normalizeDate(formData.get("lastReviewedAt"));
+
+    const coverAlt = normalizeString(formData.get("coverAlt"));
+    const coverTitle = normalizeString(formData.get("coverTitle"));
+    const coverCaption = normalizeString(formData.get("coverCaption"));
+    const coverWidth = normalizeNullableNumber(formData.get("coverWidth"));
+    const coverHeight = normalizeNullableNumber(formData.get("coverHeight"));
 
     if (!title) {
       return errorResponse("عنوان مقاله الزامی است", 400);
@@ -127,7 +411,7 @@ export async function POST(req) {
     }
 
     const categoryDoc = await ArticleCategory.findById(category)
-      .select("_id title isActive")
+      .select("_id title slug isActive")
       .lean();
 
     if (!categoryDoc) {
@@ -162,8 +446,34 @@ export async function POST(req) {
       return errorResponse("زمان مطالعه نامعتبر است", 400);
     }
 
-    if (typeof seoSchema !== "object" || Array.isArray(seoSchema) || seoSchema === null) {
+    if (!coverAlt) {
+      return errorResponse("متن جایگزین تصویر شاخص الزامی است", 400);
+    }
+
+    const lengthError =
+      validateLength(coverAlt, 200, "متن جایگزین تصویر شاخص نمی‌تواند بیشتر از ۲۰۰ کاراکتر باشد") ||
+      validateLength(coverTitle, 200, "عنوان تصویر شاخص نمی‌تواند بیشتر از ۲۰۰ کاراکتر باشد") ||
+      validateLength(coverCaption, 300, "کپشن تصویر شاخص نمی‌تواند بیشتر از ۳۰۰ کاراکتر باشد") ||
+      validateLength(metaTitle, 70, "عنوان متای سئو نمی‌تواند بیشتر از ۷۰ کاراکتر باشد") ||
+      validateLength(metaDescription, 180, "توضیحات متای سئو نمی‌تواند بیشتر از ۱۸۰ کاراکتر باشد") ||
+      validateLength(focusKeyword, 120, "کلمه کلیدی اصلی نمی‌تواند بیشتر از ۱۲۰ کاراکتر باشد") ||
+      validateLength(ogTitle, 100, "عنوان Open Graph نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد") ||
+      validateLength(ogDescription, 220, "توضیحات Open Graph نمی‌تواند بیشتر از ۲۲۰ کاراکتر باشد") ||
+      validateLength(ogImageAlt, 200, "متن جایگزین تصویر Open Graph نمی‌تواند بیشتر از ۲۰۰ کاراکتر باشد") ||
+      validateLength(twitterTitle, 100, "عنوان Twitter نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد") ||
+      validateLength(twitterDescription, 220, "توضیحات Twitter نمی‌تواند بیشتر از ۲۲۰ کاراکتر باشد") ||
+      validateLength(twitterImageAlt, 200, "متن جایگزین تصویر Twitter نمی‌تواند بیشتر از ۲۰۰ کاراکتر باشد");
+
+    if (lengthError) {
+      return errorResponse(lengthError, 400);
+    }
+
+    if (!isPlainObject(seoSchema)) {
       return errorResponse("ساختار seoSchema نامعتبر است", 400);
+    }
+
+    if (status === "scheduled" && !scheduledAt) {
+      return errorResponse("برای وضعیت زمان‌بندی‌شده، تاریخ scheduledAt الزامی است", 400);
     }
 
     const duplicateSlug = await ArticleModel.findOne({ slug })
@@ -176,45 +486,127 @@ export async function POST(req) {
 
     const coverFile = formData.get("cover");
 
-    if (!(coverFile instanceof File) || coverFile.size === 0) {
-      return errorResponse(
-        "تصویر شاخص مقاله نامعتبر است یا ارسال نشده",
-        400
-      );
+    if (!hasValidFile(coverFile)) {
+      return errorResponse("تصویر شاخص مقاله نامعتبر است یا ارسال نشده", 400);
     }
 
-    const coverUrl = await uploadImage(
-      coverFile,
-      "uploads/articles"
-    );
+    const coverUrl = await uploadImage(coverFile, "uploads/articles");
 
     if (!coverUrl) {
       return errorResponse("آپلود تصویر شاخص با خطا مواجه شد", 500);
     }
 
-    const publishedAt =
-      status === "published" ? new Date() : null;
+    const ogImageFile = formData.get("ogImageFile");
+    const twitterImageFile = formData.get("twitterImageFile");
+
+    const uploadedOgImage = await uploadOptionalImage(
+      ogImageFile,
+      "uploads/articles/og"
+    );
+
+    const uploadedTwitterImage = await uploadOptionalImage(
+      twitterImageFile,
+      "uploads/articles/twitter"
+    );
+
+    const ogImage =
+      uploadedOgImage || normalizeString(formData.get("ogImage")) || "";
+    const twitterImage =
+      uploadedTwitterImage || normalizeString(formData.get("twitterImage")) || "";
+
+    const publishedAt = status === "published" ? new Date() : null;
 
     const article = await ArticleModel.create({
       title,
       slug,
-      category,
-      authorName,
+      oldSlugs: [],
+
       excerpt,
       content,
-      readingTime,
+      contentType,
+
       cover: coverUrl,
+      coverAlt,
+      coverTitle,
+      coverCaption,
+      coverWidth,
+      coverHeight,
+
+      category,
+
       tags,
-      status,
-      publishedAt,
+
+      author,
+      authorName,
+      authorSlug,
+
+      readingTime,
+      wordCount,
+
       viewCount,
+      commentCount,
+
+      status,
+      isFeatured,
+
+      publishedAt,
+      scheduledAt: status === "scheduled" ? scheduledAt : null,
+      contentUpdatedAt: contentUpdatedAt || publishedAt,
+      lastReviewedAt,
+
       metaTitle,
       metaDescription,
-      metaKeywords,
-      canonicalUrl,
-      seoSchema,
-    });
 
+      focusKeyword,
+      secondaryKeywords,
+      searchIntent,
+
+      canonicalUrl,
+
+      noIndex,
+      noFollow,
+      noArchive,
+      noSnippet,
+      maxSnippet,
+      maxImagePreview,
+      maxVideoPreview,
+
+      ogTitle,
+      ogDescription,
+      ogImage,
+      ogImageAlt,
+
+      ogType,
+
+      twitterTitle,
+      twitterDescription,
+      twitterImage,
+      twitterImageAlt,
+      twitterCard,
+
+      includeInSitemap,
+      sitemapPriority,
+      sitemapChangefreq,
+
+      schemaType,
+      seoSchema,
+
+      faqs,
+
+      relatedArticles,
+      pillarArticle,
+      topicCluster,
+
+      headingCount,
+      imageCount,
+      internalLinkCount,
+      externalLinkCount,
+      seoScore,
+      readabilityScore,
+
+      language,
+      alternateUrls,
+    });
 
     return successResponse(
       {
@@ -235,10 +627,15 @@ export async function POST(req) {
       return errorResponse("اطلاعات تکراری است", 409);
     }
 
+    if (error?.name === "ValidationError") {
+      return errorResponse("اطلاعات ارسالی معتبر نیست", 400, {
+        errors: Object.values(error.errors || {}).map((item) => item.message),
+      });
+    }
+
     return errorResponse("خطای داخلی سرور", 500);
   }
 }
-
 
 // GET /api/admin/articles
 export async function GET(req) {
@@ -246,6 +643,7 @@ export async function GET(req) {
     await connectToDB();
 
     const admin = await requireAdmin();
+
     if (!admin) {
       return errorResponse("دسترسی غیرمجاز است", 401);
     }
@@ -253,12 +651,43 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
 
     const page = Math.max(Number(searchParams.get("page")) || 1, 1);
-    const limit = Math.min(Math.max(Number(searchParams.get("limit")) || 10, 1), 100);
+    const limit = Math.min(
+      Math.max(Number(searchParams.get("limit")) || 10, 1),
+      100
+    );
     const skip = (page - 1) * limit;
 
     const search = normalizeString(searchParams.get("search"));
     const status = normalizeString(searchParams.get("status"));
     const category = normalizeString(searchParams.get("category"));
+    const author = normalizeString(searchParams.get("author"));
+    const authorSlug = normalizeString(searchParams.get("authorSlug"));
+    const tag = normalizeString(searchParams.get("tag"));
+    const language = normalizeLowerString(searchParams.get("language"));
+    const isFeatured = searchParams.get("isFeatured");
+    const noIndex = searchParams.get("noIndex");
+    const includeInSitemap = searchParams.get("includeInSitemap");
+
+    const sortBy = normalizeString(searchParams.get("sortBy")) || "createdAt";
+    const sortOrder = normalizeString(searchParams.get("sortOrder")) === "asc" ? 1 : -1;
+
+    const allowedSortFields = [
+      "createdAt",
+      "updatedAt",
+      "publishedAt",
+      "scheduledAt",
+      "contentUpdatedAt",
+      "lastReviewedAt",
+      "viewCount",
+      "commentCount",
+      "readingTime",
+      "wordCount",
+      "seoScore",
+      "readabilityScore",
+      "title",
+    ];
+
+    const sortField = allowedSortFields.includes(sortBy) ? sortBy : "createdAt";
 
     const query = {};
 
@@ -268,10 +697,16 @@ export async function GET(req) {
         { excerpt: { $regex: search, $options: "i" } },
         { slug: { $regex: search, $options: "i" } },
         { authorName: { $regex: search, $options: "i" } },
+        { authorSlug: { $regex: search, $options: "i" } },
+        { metaTitle: { $regex: search, $options: "i" } },
+        { metaDescription: { $regex: search, $options: "i" } },
+        { focusKeyword: { $regex: search, $options: "i" } },
+        { secondaryKeywords: { $regex: search, $options: "i" } },
+        { tags: { $regex: search, $options: "i" } },
       ];
     }
 
-    if (["draft", "published", "archived"].includes(status)) {
+    if (["draft", "review", "scheduled", "published", "archived"].includes(status)) {
       query.status = status;
     }
 
@@ -279,16 +714,58 @@ export async function GET(req) {
       if (!mongoose.Types.ObjectId.isValid(category)) {
         return errorResponse("شناسه دسته‌بندی نامعتبر است", 400);
       }
+
       query.category = category;
     }
 
+    if (author) {
+      if (!mongoose.Types.ObjectId.isValid(author)) {
+        return errorResponse("شناسه نویسنده نامعتبر است", 400);
+      }
+
+      query.author = author;
+    }
+
+    if (authorSlug) {
+      query.authorSlug = authorSlug;
+    }
+
+    if (tag) {
+      query.tags = tag;
+    }
+
+    if (language) {
+      query.language = language;
+    }
+
+    if (isFeatured !== null) {
+      query.isFeatured = normalizeBoolean(isFeatured, false);
+    }
+
+    if (noIndex !== null) {
+      query.noIndex = normalizeBoolean(noIndex, false);
+    }
+
+    if (includeInSitemap !== null) {
+      query.includeInSitemap = normalizeBoolean(includeInSitemap, true);
+    }
+
+    const projection = [
+      "-__v",
+      "-content",
+      "-comments",
+      "-seoSchema",
+    ].join(" ");
+
     const [articles, total] = await Promise.all([
-      ArticleModel.find(query, "-__v -content")
+      ArticleModel.find(query, projection)
         .populate("category", "_id title slug")
-        .sort({ createdAt: -1 })
+        .populate("author", "_id name slug avatar")
+        .sort({ [sortField]: sortOrder, _id: -1 })
         .skip(skip)
         .limit(limit)
         .lean(),
+
       ArticleModel.countDocuments(query),
     ]);
 

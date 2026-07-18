@@ -1,54 +1,99 @@
+import Image from "next/image";
 import Link from "next/link";
+import { FaInstagram, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 
-import { FaWhatsapp, FaInstagram, FaTelegramPlane } from "react-icons/fa";
+const socialLinks = [
+  {
+    href: "https://www.instagram.com/t1w.ir/",
+    label: "اینستاگرام تیوان",
+    icon: FaInstagram,
+  },
+  {
+    href: "https://t.me/09125673763",
+    label: "تلگرام تیوان",
+    icon: FaTelegramPlane,
+  },
+  {
+    href: "https://wa.me/989125673763",
+    label: "واتساپ تیوان",
+    icon: FaWhatsapp,
+  },
+];
 
 export default function Contact() {
-    return (
-        <div className="container">
-            <div className="bg-gray-100 flex flex-col md:flex-row items-center justify-center px-3 py-8 md:px-0 md:py-0 rounded-4xl 2xl:py-0 xl:py-8">
-
-                <div className="md:w-[45%] w-full">
-                    <img
-                        src="/images/man-laptop.png"
-
-                    />
-                </div>
-                <div className="flex flex-col w-full md:w-[30%] gap-6 md:gap-10 items-center">
-                    <span className="inline-flex">
-                        <h4 className=" text-third text-center font-yekan-bakh text-lg md:text-xl py-1 px-4 border-t border-b"> اولیـــــــن قــــدم بــــــــرای <span className="text-[#4fd9e2] font-bold bg-[#ecfcfc]">موفقیــــــت آنـــــــــلاین</span> </h4>
-                    </span>
-                    <h1 className=" text-secondery text-center md:text-right text-3xl md:text-4xl font-bold font-yekan-bakh">تیوان _<span className="text-third">هرآنچه برای موفقیت دیجیتال نیاز دارید</span> </h1>
-                    <h4 className="font-yekan-bakh font-medium text-justify">تیم حرفه‌ای تیوان با تخصص جامع در طراحی وب‌سایت اختصاصی با وردپرس و فریمورک‌های مدرن مانند Next.js و React، برنامه‌نویسی با PHP، Laravel، Node.js و بهینه‌سازی‌های پیشرفته سئو (SEO)، صفر تا صد پروژه‌های دیجیتال شما را با کیفیت بالا و سرعت تحویل می‌دهد.
-                        از طراحی رابط کاربری (UI) و تجربه کاربری (UX) تا توسعه اپلیکیشن‌های وب و موبایل، از تولید محتوا تا اجرای استراتژی‌های موفق دیجیتال مارکتینگ و تبلیغات هدفمند در گوگل و شبکه‌های اجتماعی، تیوان همراه شماست.
-                        با استفاده از فناوری‌های به‌روز و تیمی متعهد، ما تضمین می‌کنیم کسب‌وکار شما در بازارهای ایران و بین‌المللی مانند کانادا و آلمان، رشد قابل توجهی در جذب مشتری، افزایش فروش و بهبود رتبه در موتورهای جستجو داشته باشد.
-
-
-                    </h4>
-                    <div className="flex items-center justify-between gap-8">
-                        <Link href={"/web-design"} className="flex justify-between group items-center hover:bg-black hover:border-black hover:text-white transition-all py-2 px-6 border-2 rounded-full gap-10">
-                            <p className="font-yekan-bakh text-lg ">شروع کنید</p>
-                            <HiOutlineArrowLongLeft className="text-3xl group-hover:-translate-x-2 transition-all" />
-                        </Link>
-                        <div className="flex flex-col items-center justify-between gap-3">
-                            <h4 className="font-yekan-bakh text-gray-800 font-medium">راه های ارتباط باما </h4>
-                            <div className="flex items-center justify-center text-2xl text-third gap-4 cursor-pointer">
-                                <a href="https://www.instagram.com/t1w.ir/"> 
-                                <FaInstagram className="hover:animate-bounce hover:transition-all" />
-                                </a>
-                               <a href="https://t.me/09125673763">
-                                <FaTelegramPlane className="hover:animate-bounce hover:transition-all" />
-                               </a>
-                               <a href="https://wa.me/09125673763">
-                                <FaWhatsapp className="hover:animate-bounce hover:transition-all" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+  return (
+    <section className="container mt-16 font-yekan-bakh">
+      <div className="grid items-center gap-8 rounded-[2rem] bg-gray-100 px-4 py-8 md:grid-cols-[1fr_0.9fr] md:px-8 lg:px-12 xl:py-10">
+        <div className="order-2 md:order-1">
+          <Image
+            src="/images/man-laptop.png"
+            alt="مشاوره طراحی سایت و دیجیتال مارکتینگ تیوان"
+            width={640}
+            height={520}
+            className="mx-auto h-auto w-full max-w-[560px] object-contain"
+          />
         </div>
-    )
+
+        <div className="order-1 flex flex-col items-center gap-6 text-center md:order-2 md:items-start md:text-right">
+          <p className="inline-flex border-y border-gray-300 px-4 py-2 text-sm font-medium text-third md:text-base">
+            اولین قدم برای{" "}
+            <span className="mx-1 rounded-full bg-[#ecfcfc] px-2 font-bold text-[#39d4df]">
+              موفقیت آنلاین
+            </span>
+          </p>
+
+          <h2 className="text-2xl font-extrabold leading-10 text-secondery md:text-4xl md:leading-[3.4rem]">
+            تیوان،{" "}
+            <span className="text-third">
+              هرآنچه برای موفقیت دیجیتال نیاز دارید
+            </span>
+          </h2>
+
+          <p className="text-justify text-sm leading-8 text-gray-700 md:text-base md:leading-9">
+            تیم حرفه‌ای تیوان با تخصص جامع در طراحی وب‌سایت اختصاصی با وردپرس و
+            فریمورک‌های مدرن مانند Next.js و React، برنامه‌نویسی با PHP،
+            Laravel و Node.js و بهینه‌سازی پیشرفته سئو، صفر تا صد پروژه‌های
+            دیجیتال شما را با کیفیت بالا و سرعت مناسب اجرا می‌کند. از طراحی رابط
+            کاربری و تجربه کاربری تا توسعه اپلیکیشن‌های وب و موبایل، تولید محتوا
+            و اجرای استراتژی‌های دیجیتال مارکتینگ، تیوان همراه شماست.
+          </p>
+
+          <div className="flex w-full flex-col items-center gap-5 sm:flex-row sm:justify-center md:justify-start">
+            <Link
+              href="/web-design"
+              className="group inline-flex items-center justify-center gap-8 rounded-full border-2 border-primary px-6 py-3 text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              <span className="text-base font-bold">شروع کنید</span>
+              <HiOutlineArrowLongLeft
+                className="text-2xl transition-transform group-hover:-translate-x-1"
+                aria-hidden="true"
+              />
+            </Link>
+
+            <div className="flex flex-col items-center gap-3 sm:items-start">
+              <p className="text-sm font-medium text-gray-700">
+                راه‌های ارتباط با ما
+              </p>
+
+              <div className="flex items-center gap-3 text-third">
+                {socialLinks.map(({ href, label, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="flex size-10 items-center justify-center rounded-full bg-white transition-colors hover:bg-secondery/10 hover:text-secondery"
+                  >
+                    <Icon size={22} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

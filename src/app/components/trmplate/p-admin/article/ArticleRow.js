@@ -181,7 +181,7 @@ export default function ArticleRow({ article }) {
         <div className="flex items-center justify-center gap-2">
           <Link
             href={`/p-admin/articles/${article._id}/edit`}
-            className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs text-blue-600 transition hover:bg-blue-500 hover:text-white"
+            className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-3 py-1.5 text-xs text-primary transition hover:bg-primary hover:text-white"
           >
             <CiEdit size={15} />
             ویرایش
@@ -190,7 +190,7 @@ export default function ArticleRow({ article }) {
           <button
             type="button"
             onClick={deleteHandler}
-            className="inline-flex items-center gap-1 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs text-red-600 transition hover:bg-red-500 hover:text-white"
+            className="inline-flex items-center cursor-pointer gap-1 rounded-lg bg-red-50 px-3 py-1.5 text-xs text-red-600 transition hover:bg-red-500 hover:text-white"
           >
             <CiTrash size={15} />
             حذف

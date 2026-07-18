@@ -1,74 +1,99 @@
-"use client";
-
-import { useState } from "react";
-
 const features = [
   {
     feature: "سرعت و عملکرد",
     wordpress: "ممکن است با پلاگین‌ها کند شود",
-    custom: "بهینه و سریع، کاملاً سفارشی",
+    custom: "بهینه، سریع و کاملاً سفارشی",
   },
   {
     feature: "امنیت",
-    wordpress: "آسیب‌پذیر نسبت به هک شدن قالب‌ها",
-    custom: "امنیت بالا و استانداردهای حرفه‌ای",
+    wordpress: "وابسته به قالب، افزونه‌ها و بروزرسانی‌ها",
+    custom: "امنیت بالاتر با پیاده‌سازی استاندارد",
   },
   {
     feature: "سئو و بهینه‌سازی",
-    wordpress: "نیاز به افزونه و تنظیمات دستی",
+    wordpress: "نیازمند افزونه و تنظیمات دستی",
     custom: "بهینه‌شده از ابتدا برای موتورهای جستجو",
   },
   {
     feature: "انعطاف‌پذیری",
     wordpress: "محدود به قالب و پلاگین‌ها",
-    custom: "طراحی کامل مطابق نیاز مشتری",
+    custom: "طراحی کامل مطابق نیاز کسب‌وکار",
   },
   {
     feature: "قابلیت توسعه",
-    wordpress: "محدود به چارچوب وردپرس",
-    custom: "کاملاً قابل توسعه و ارتقا در آینده",
+    wordpress: "محدود به ساختار وردپرس",
+    custom: "قابل توسعه و ارتقا در آینده",
   },
   {
     feature: "هزینه",
-    wordpress: "ارزان‌تر در کوتاه‌مدت",
-    custom: "سرمایه‌گذاری طولانی‌مدت ولی ارزشمند",
+    wordpress: "ارزان‌تر در شروع پروژه",
+    custom: "سرمایه‌گذاری بلندمدت و ارزشمند",
   },
   {
     feature: "منحصر به فرد بودن",
-    wordpress: "شباهت به صدها سایت دیگر",
-    custom: "کاملاً اختصاصی و منحصر به فرد",
+    wordpress: "احتمال شباهت به سایت‌های دیگر",
+    custom: "کاملاً اختصاصی و متفاوت",
   },
 ];
 
 export default function ComparisonTable() {
   return (
-    <div className="overflow-x-auto py-20 px-4 font-yekan-bakh container">
-      <h2 className="text-3xl font-bold text-center text-primary mb-8">
-        مقایسه طراحی وبسایت با وردپرس و برنامه‌نویسی اختصاصی
-      </h2>
-      <table className="min-w-full border-collapse rounded-xl overflow-hidden shadow-lg">
-        <thead className="bg-secondery text-white">
-          <tr className="text-center">
-            <th className="py-4 px-6">ویژگی</th>
-            <th className="py-4 px-6 ">وردپرس</th>
-            <th className="py-4 px-6 ">برنامه نویسی </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white">
-          {features.map((item, index) => (
-            <tr
-              key={index}
-              className={`${
-                index % 2 === 0 ? "bg-gray-50 text-center" : "bg-white"
-              } hover:bg-indigo-50 text-center transition-colors`}
-            >
-              <td className="py-4 px-6 font-medium">{item.feature}</td>
-              <td className="py-4 px-6">{item.wordpress}</td>
-              <td className="py-4 px-6 font-semibold">{item.custom}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <section className="w-full py-16 font-yekan-bakh md:py-20">
+      <div className="container">
+        <div className="mb-10 text-center">
+          <span className="mb-3 inline-flex rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+            مقایسه
+          </span>
+
+          <h2 className="mx-auto max-w-3xl text-2xl font-extrabold leading-[1.7] text-primary md:text-3xl">
+            مقایسه طراحی وبسایت با وردپرس و برنامه‌نویسی اختصاصی
+          </h2>
+        </div>
+
+        <div className="overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-lg shadow-gray-200/70">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[760px] border-collapse text-right">
+              <thead>
+                <tr className="bg-secondery text-center text-white">
+                  <th className="w-1/4 px-5 py-5 text-sm font-bold md:text-base">
+                    ویژگی
+                  </th>
+                  <th className="w-1/3 px-5 py-5 text-sm font-bold md:text-base">
+                    وردپرس
+                  </th>
+                  <th className="w-1/3 px-5 py-5 text-sm font-bold md:text-base">
+                    برنامه‌نویسی اختصاصی
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {features.map((item, index) => (
+                  <tr
+                    key={item.feature}
+                    className={[
+                      "border-b border-gray-100 text-center transition-colors last:border-b-0 hover:bg-primary/5",
+                      index % 2 === 0 ? "bg-gray-50/80" : "bg-white",
+                    ].join(" ")}
+                  >
+                    <td className="px-5 py-5 text-sm font-bold text-gray-800 md:text-base">
+                      {item.feature}
+                    </td>
+
+                    <td className="px-5 py-5 text-sm leading-7 text-gray-600 md:text-base">
+                      {item.wordpress}
+                    </td>
+
+                    <td className="px-5 py-5 text-sm font-semibold leading-7 text-primary md:text-base">
+                      {item.custom}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
