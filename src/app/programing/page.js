@@ -1,4 +1,4 @@
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 import Footer from "../components/module/footer/Footer";
 import Navbar from "../components/module/navbar/Navbar";

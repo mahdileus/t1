@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { notFound } from "next/navigation";
 import connectToDB from "@/configs/db";
 import ArticleModel from "@/models/Article";
@@ -9,7 +11,7 @@ import Shape from "../components/trmplate/index/shape/Shape";
 const ARTICLES_PER_PAGE = 9;
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://t1w.ir";
 
 function normalizeSiteUrl(url = "") {
   return url.endsWith("/") ? url.slice(0, -1) : url;

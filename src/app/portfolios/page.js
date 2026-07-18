@@ -1,4 +1,4 @@
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 import ProjectModel from "@/models/Project";
 import connectToDB from "@/configs/db";

@@ -1,3 +1,4 @@
+export const revalidate = 86400;
 import Footer from "../components/module/footer/Footer";
 import Navbar from "../components/module/navbar/Navbar";
 import AboutBoxes from "../components/trmplate/about-us/AboutBoxes";

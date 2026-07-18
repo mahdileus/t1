@@ -1,6 +1,5 @@
-// /app/articles/[slug]/page.jsx
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 import Footer from "@/app/components/module/footer/Footer";
 import Navbar from "@/app/components/module/navbar/Navbar";
