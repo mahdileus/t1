@@ -6,14 +6,12 @@ const faqSchema = new Schema(
   {
     question: {
       type: String,
-      required: true,
       trim: true,
       maxlength: 300,
     },
 
     answer: {
       type: String,
-      required: true,
       trim: true,
     },
 
@@ -484,14 +482,12 @@ const articleSchema = new Schema(
       {
         lang: {
           type: String,
-          required: true,
           trim: true,
           lowercase: true,
         },
 
         url: {
           type: String,
-          required: true,
           trim: true,
         },
       },
