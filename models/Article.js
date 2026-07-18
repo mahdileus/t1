@@ -497,6 +497,7 @@ const articleSchema = new Schema(
 );
 
 // Text Search
+// Text Search
 articleSchema.index(
   {
     title: "text",
@@ -507,6 +508,9 @@ articleSchema.index(
     secondaryKeywords: "text",
   },
   {
+    name: "ArticleTextIndex",
+    default_language: "none",
+    language_override: "_mongoTextLanguage",
     weights: {
       title: 10,
       focusKeyword: 8,
@@ -517,6 +521,7 @@ articleSchema.index(
     },
   }
 );
+
 
 // Listing Indexes
 articleSchema.index({ status: 1, publishedAt: -1 });
