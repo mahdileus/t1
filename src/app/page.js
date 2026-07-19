@@ -21,8 +21,7 @@ export default async function Home() {
 
   const posts = await ArticleModel.find({
     status: "published",
-    visibility: "public",
-    noIndex: { $ne: true },
+
   })
     .sort({ publishedAt: -1, createdAt: -1 })
     .limit(8)
@@ -33,8 +32,7 @@ export default async function Home() {
     .lean();
 
   const projects = await ProjectModel.find({
-    status: "published",
-    visibility: "public",
+
   })
     .sort({ createdAt: -1 })
     .limit(8)
@@ -52,7 +50,7 @@ export default async function Home() {
       <main>
         <HeroSection />
 
-        <Portfolio projects={projects} />
+        <Portfolio projects={JSON.parse(JSON.stringify(projects))} />
 
         <AboutUs />
 
@@ -62,7 +60,7 @@ export default async function Home() {
 
         <Process />
 
-        <Posts posts={posts} />
+        <Posts posts={JSON.parse(JSON.stringify(posts))} />
 
         <Comments />
       </main>

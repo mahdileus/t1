@@ -1,7 +1,7 @@
-// app/p-admin/articles/[id]/edit/page.js
 
 import mongoose from "mongoose";
 import { notFound } from "next/navigation";
+import UserModel from "@/models/User";
 
 import ArticleForm from "@/app/components/trmplate/p-admin/article/ArticleForm";
 import connectToDB from "@/configs/db";

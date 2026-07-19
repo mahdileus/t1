@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import mongoose, { isValidObjectId } from "mongoose";
+import UserModel from "@/models/User";
+
 
 import connectToDB from "@/configs/db";
 import ArticleModel from "@/models/Article";

@@ -140,7 +140,7 @@ const articleSchema = new Schema(
 
     author: {
       type: Schema.Types.ObjectId,
-      ref: "Author",
+      ref: "User",
       default: null,
       index: true,
     },
