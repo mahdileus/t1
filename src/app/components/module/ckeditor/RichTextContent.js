@@ -1,9 +1,9 @@
 "use client";
 
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 export default function RichTextContent({ html, className = "" }) {
-  if (!html) return null;
+  if (!html || typeof html !== "string") return null;
 
   const cleanHtml = DOMPurify.sanitize(html, {
     ADD_TAGS: ["iframe"],
@@ -14,6 +14,8 @@ export default function RichTextContent({ html, className = "" }) {
       "allowfullscreen",
       "frameborder",
       "loading",
+      "referrerpolicy",
+      "title",
     ],
   });
 
