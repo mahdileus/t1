@@ -22,7 +22,7 @@ const links = [
     },
     {
         name: " برنامه نویسی",
-        path: "/programing",
+        path: "/programming",
     },
     {
         name: "نمونه کار ها",
