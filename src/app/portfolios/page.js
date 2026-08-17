@@ -72,93 +72,87 @@ export const metadata = {
   },
 };
 
-const portfolioSchema = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: "نمونه‌کارهای تیوان",
-  url: `${siteUrl}/portfolio`,
-  inLanguage: "fa-IR",
-  description:
-    "آرشیو نمونه‌کارهای شرکت تیوان در زمینه طراحی سایت اختصاصی، برنامه‌نویسی وب، سئو و دیجیتال مارکتینگ.",
-  isPartOf: {
-    "@type": "WebSite",
-    name: "آرین تجارت تیوان",
-    url: siteUrl,
-  },
-};
+/* ---------- helper ها ---------- */
+function getCategoryLabel(category) {
+  if (!category) return "";
+  if (typeof category === "string") return category.trim();
+  return (category?.title || category?.name || "").trim();
+}
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "خانه",
-      item: siteUrl,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "نمونه‌کارها",
-      item: `${siteUrl}/portfolio`,
-    },
-  ],
-};
+function absoluteUrl(url) {
+  if (!url || typeof url !== "string") return undefined;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `${siteUrl}${url.startsWith("/") ? url : `/${url}`}`;
+}
 
-function PortfolioIcon() {
-  return (
-    <svg
-      className="h-10 w-10 text-secondery"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 64 64"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M24 10h16a6 6 0 0 1 6 6v4h6a6 6 0 0 1 6 6v26a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6V26a6 6 0 0 1 6-6h6v-4a6 6 0 0 1 6-6Z"
-        stroke="currentColor"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M22 20v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4"
-        stroke="currentColor"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-      <path
-        d="M6 34h18"
-        stroke="currentColor"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-      <path
-        d="M40 34h18"
-        stroke="currentColor"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-      <path
-        d="M25 31h14v8H25v-8Z"
-        stroke="currentColor"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+function buildPortfolioSchema(projects) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "خانه",
+            item: siteUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "نمونه‌کارها",
+            item: `${siteUrl}/portfolio`,
+          },
+        ],
+      },
+      {
+        "@type": "CollectionPage",
+        name: "نمونه‌کارهای تیوان",
+        url: `${siteUrl}/portfolio`,
+        inLanguage: "fa-IR",
+        description:
+          "آرشیو نمونه‌کارهای شرکت تیوان در زمینه طراحی سایت اختصاصی، برنامه‌نویسی وب، سئو و دیجیتال مارکتینگ.",
+        isPartOf: {
+          "@type": "WebSite",
+          name: "آرین تجارت تیوان",
+          url: siteUrl,
+        },
+        mainEntity: {
+          "@type": "ItemList",
+          name: "فهرست نمونه‌کارهای تیوان",
+          numberOfItems: projects.length,
+          itemListElement: projects.map((project, index) => {
+            const category = getCategoryLabel(project.category);
+
+            return {
+              "@type": "ListItem",
+              position: index + 1,
+              url: `${siteUrl}/portfolio/${project.slug}`,
+              item: {
+                "@type": "CreativeWork",
+                name: project.title,
+                description: project.excerpt || project.description || "",
+                image: absoluteUrl(project.cover),
+                ...(category ? { about: category } : {}),
+              },
+            };
+          }),
+        },
+      },
+    ],
+  };
 }
 
 export default async function PortfolioPage() {
   await connectToDB();
 
-const projects = await ProjectModel.find({})
-  .sort({ createdAt: -1 })
-  .select("title slug description excerpt cover coverAlt tags category createdAt")
-  .lean();
+  const projects = await ProjectModel.find({})
+    .sort({ createdAt: -1 })
+    .select("title slug description excerpt cover coverAlt tags category createdAt")
+    .lean();
 
-const serializedProjects = JSON.parse(JSON.stringify(projects));
-
+  const serializedProjects = JSON.parse(JSON.stringify(projects));
 
   const allTags = Array.from(
     new Set(
@@ -173,46 +167,42 @@ const serializedProjects = JSON.parse(JSON.stringify(projects));
   const allCategories = Array.from(
     new Set(
       serializedProjects
-        .map((project) => project.category)
-        .filter(Boolean)
-        .map((category) => {
-          if (typeof category === "string") return category.trim();
-          if (category?.title) return category.title.trim();
-          if (category?.name) return category.name.trim();
-          return "";
-        })
+        .map((project) => getCategoryLabel(project.category))
         .filter(Boolean)
     )
   );
 
+  const portfolioSchema = buildPortfolioSchema(serializedProjects);
+
   return (
     <>
       <Shape />
-
       <Navbar />
 
-      <main>
-        <section
-          className="pt-20 font-yekan-bakh"
-          aria-labelledby="portfolio-page-title"
-        >
-          <div className="container">
-            <div className="flex items-center justify-center gap-4">
-              <PortfolioIcon />
-
-              <h1
-                id="portfolio-page-title"
-                className="text-center text-3xl font-bold text-primary"
-              >
-                نمونه‌کارها
-              </h1>
-            </div>
-
-            <p className="mx-auto mt-5 max-w-3xl text-center text-sm leading-8 text-gray-600 md:text-base md:leading-9">
-              در این بخش می‌توانید بخشی از پروژه‌های تیوان در زمینه طراحی سایت
-              اختصاصی، برنامه‌نویسی وب، سئو و دیجیتال مارکتینگ را مشاهده کنید.
+      <main
+        id="main-content"
+        aria-labelledby="portfolio-page-title"
+        className="pb-20 pt-10 font-yekan-bakh md:pt-14"
+      >
+        {/* Hero */}
+        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <header className="mx-auto max-w-3xl text-center">
+            <p className="inline-flex rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-xs font-semibold text-[var(--color-secondery)]">
+              نمونه‌کارهای تیوان
             </p>
-          </div>
+
+            <h1
+              id="portfolio-page-title"
+              className="mt-5 text-3xl font-extrabold leading-[2.5rem] text-primary md:text-5xl md:leading-[4.5rem]"
+            >
+              پروژه‌های طراحی سایت، برنامه‌نویسی و سئو
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-8 text-slate-500 md:text-base">
+              بخشی از پروژه‌های تیوان در زمینه طراحی سایت اختصاصی، برنامه‌نویسی
+              وب، سئو و دیجیتال مارکتینگ را اینجا مرور کنید.
+            </p>
+          </header>
         </section>
 
         <Projects
@@ -227,14 +217,10 @@ const serializedProjects = JSON.parse(JSON.stringify(projects));
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(portfolioSchema),
-        }}
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema),
+          __html: JSON.stringify(portfolioSchema)
+            .replace(/</g, "\\u003c")
+            .replace(/>/g, "\\u003e")
+            .replace(/&/g, "\\u0026"),
         }}
       />
     </>

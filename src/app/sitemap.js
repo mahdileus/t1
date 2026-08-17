@@ -1,23 +1,45 @@
-
 import connectToDB from "@/configs/db";
 import Article from "@/models/Article";
 import Project from "@/models/Project";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
-
 const siteUrl = "https://t1w.ir";
 
+export const revalidate = 3600;
+
 export default async function sitemap() {
-  await connectToDB();
+  let articles = [];
+  let projects = [];
+
+  try {
+    await connectToDB();
+
+    articles = await Article.find({
+      $or: [{ status: "published" }, { status: { $exists: false } }],
+      noIndex: { $ne: true },
+      slug: { $exists: true, $ne: "" },
+    })
+      .select("slug updatedAt createdAt")
+      .sort({ updatedAt: -1 })
+      .lean();
+
+    projects = await Project.find({
+      $or: [{ status: "published" }, { status: { $exists: false } }],
+      noIndex: { $ne: true },
+      slug: { $exists: true, $ne: "" },
+    })
+      .select("slug updatedAt createdAt")
+      .sort({ updatedAt: -1 })
+      .lean();
+  } catch (error) {
+    console.error("Sitemap generation error:", error);
+  }
 
   const staticRoutes = [
     {
       url: `${siteUrl}/`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 1,
+      priority: 1.0,
     },
     {
       url: `${siteUrl}/seo`,
@@ -63,42 +85,18 @@ export default async function sitemap() {
     },
   ];
 
-  const articles = await Article.find({
-    $or: [
-      { status: "published" },
-      { status: { $exists: false } },
-    ],
-    noIndex: { $ne: true },
-    slug: { $exists: true, $ne: "" },
-  })
-    .select("slug updatedAt createdAt")
-    .sort({ updatedAt: -1 })
-    .lean();
-
   const articleRoutes = articles.map((article) => ({
     url: `${siteUrl}/articles/${article.slug}`,
     lastModified: article.updatedAt || article.createdAt || new Date(),
     changeFrequency: "weekly",
-    priority: 0.75,
+    priority: 0.8,
   }));
-
-  const projects = await Project.find({
-    $or: [
-      { status: "published" },
-      { status: { $exists: false } },
-    ],
-    noIndex: { $ne: true },
-    slug: { $exists: true, $ne: "" },
-  })
-    .select("slug updatedAt createdAt")
-    .sort({ updatedAt: -1 })
-    .lean();
 
   const portfolioRoutes = projects.map((project) => ({
     url: `${siteUrl}/portfolio/${project.slug}`,
     lastModified: project.updatedAt || project.createdAt || new Date(),
     changeFrequency: "monthly",
-    priority: 0.75,
+    priority: 0.7,
   }));
 
   return [...staticRoutes, ...articleRoutes, ...portfolioRoutes];

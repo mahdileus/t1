@@ -13,8 +13,10 @@ export default function robots() {
           "/about-us",
           "/contact-us",
           "/portfolios",
-          "/portfolio",
+          "/portfolios/*",
           "/articles",
+          "/articles/",
+          "/articles/*",
         ],
         disallow: [
           "/api/",
@@ -25,6 +27,5 @@ export default function robots() {
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
-    host: siteUrl,
   };
 }

@@ -11,6 +11,7 @@ import Footer from "./components/module/footer/Footer";
 import Comments from "./components/trmplate/index/comments/comments";
 import Shape from "./components/trmplate/index/shape/Shape";
 import ViewTracker from "./components/trmplate/analytics/ViewTracker";
+import ArticleCategory from "@/models/ArticleCategory";
 
 import connectToDB from "@/configs/db";
 import ArticleModel from "@/models/Article";

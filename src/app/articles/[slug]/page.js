@@ -1,4 +1,3 @@
-
 export const dynamic = "force-dynamic";
 
 import Footer from "@/app/components/module/footer/Footer";
@@ -11,11 +10,12 @@ import connectToDB from "@/configs/db";
 import ArticleModel from "@/models/Article";
 import { notFound } from "next/navigation";
 
+// اصلاح آدرس پیش‌فرض به دامنه رسمی سایت برای جلوگیری از خطای localhost:3000
 function getSiteUrl() {
   return (
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.NEXT_PUBLIC_APP_URL ||
-    "http://localhost:3000"
+    "https://t1w.ir"
   ).replace(/\/$/, "");
 }
 
@@ -61,11 +61,29 @@ function parseSeoSchema(schema) {
   return null;
 }
 
+// جایگزینی دامنه‌های اشتباه و فیک ذخیره شده در دیتابیس با دامنه واقعی به صورت پویا
+function sanitizeAndResolveSchema(schema) {
+  const customSchema = parseSeoSchema(schema);
+  if (!customSchema) return null;
+
+  const siteUrl = getSiteUrl();
+  try {
+    const schemaString = JSON.stringify(customSchema);
+    // اصلاح تمام آدرس‌های فیک مانند example.com به دامنه واقعی سایت
+    const resolvedString = schemaString.replaceAll("https://example.com", siteUrl);
+    return JSON.parse(resolvedString);
+  } catch (error) {
+    console.error("Failed to sanitize schema urls:", error);
+    return customSchema;
+  }
+}
+
 function buildArticleJsonLd(article) {
   const siteUrl = getSiteUrl();
   const articleUrl = `${siteUrl}/articles/${article.slug}`;
 
-  const customSchema = parseSeoSchema(article.seoSchema);
+  // استفاده از نسخه ایمن‌سازی شده اسکیما
+  const customSchema = sanitizeAndResolveSchema(article.seoSchema);
 
   if (customSchema && Object.keys(customSchema).length > 0) {
     return customSchema;
@@ -233,6 +251,9 @@ export async function generateMetadata({ params }) {
       ? Number(article.maxSnippet)
       : -1;
 
+  // اطمینان از مطلق بودن آدرس کانونیکال با متد getAbsoluteUrl
+  const finalCanonical = getAbsoluteUrl(article.canonicalUrl) || articleUrl;
+
   return {
     title,
     description,
@@ -245,7 +266,7 @@ export async function generateMetadata({ params }) {
     ].filter(Boolean),
 
     alternates: {
-      canonical: article.canonicalUrl || articleUrl,
+      canonical: finalCanonical,
     },
 
     robots: {
@@ -324,7 +345,13 @@ const ArticlePage = async ({ params }) => {
     .lean();
 
   const articleJsonLd = buildArticleJsonLd(article);
-  const faqJsonLd = buildFaqJsonLd(article.faqs);
+  
+  // بررسی اینکه اگر FAQ از قبل در ساختار درختی seoSchema موجود نباشد، آن را به عنوان اسکیما اضافه کند تا تکراری نشود
+  let faqJsonLd = null;
+  const hasFaqInSchema = JSON.stringify(articleJsonLd).includes("FAQPage");
+  if (!hasFaqInSchema) {
+    faqJsonLd = buildFaqJsonLd(article.faqs);
+  }
 
   const serializedArticle = serializeMongoDoc(article);
   const serializedLatestArticles = serializeMongoDoc(latestArticles);
