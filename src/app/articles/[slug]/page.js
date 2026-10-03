@@ -176,47 +176,18 @@ export async function generateMetadata({ params }) {
     slug,
     status: "published",
   })
-    .select(
-      [
-        "title",
-        "slug",
-        "excerpt",
-
-        "metaTitle",
-        "metaDescription",
-        "focusKeyword",
-        "secondaryKeywords",
-        "canonicalUrl",
-
-        "noIndex",
-        "noFollow",
-        "noArchive",
-        "noSnippet",
-        "maxSnippet",
-        "maxImagePreview",
-        "maxVideoPreview",
-
-        "cover",
-        "coverAlt",
-
-        "ogTitle",
-        "ogDescription",
-        "ogImage",
-        "ogImageAlt",
-        "ogType",
-
-        "twitterTitle",
-        "twitterDescription",
-        "twitterImage",
-        "twitterImageAlt",
-        "twitterCard",
-
-        "publishedAt",
-        "contentUpdatedAt",
-        "updatedAt",
-        "language",
-      ].join(" ")
-    )
+    .populate("category", "title slug")
+    .populate({
+      path: "relatedArticles",
+      match: { status: "published" },
+      select:
+        "title slug cover coverAlt excerpt publishedAt readingTime",
+    })
+    .populate({
+      path: "pillarArticle",
+      match: { status: "published" },
+      select: "title slug cover coverAlt excerpt",
+    })
     .lean();
 
   if (!article) {
@@ -302,11 +273,11 @@ export async function generateMetadata({ params }) {
           : undefined,
       images: ogImage
         ? [
-            {
-              url: ogImage,
-              alt: article.ogImageAlt || article.coverAlt || article.title,
-            },
-          ]
+          {
+            url: ogImage,
+            alt: article.ogImageAlt || article.coverAlt || article.title,
+          },
+        ]
         : [],
     },
 
@@ -345,7 +316,7 @@ const ArticlePage = async ({ params }) => {
     .lean();
 
   const articleJsonLd = buildArticleJsonLd(article);
-  
+
   // بررسی اینکه اگر FAQ از قبل در ساختار درختی seoSchema موجود نباشد، آن را به عنوان اسکیما اضافه کند تا تکراری نشود
   let faqJsonLd = null;
   const hasFaqInSchema = JSON.stringify(articleJsonLd).includes("FAQPage");

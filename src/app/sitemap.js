@@ -2,102 +2,148 @@ import connectToDB from "@/configs/db";
 import Article from "@/models/Article";
 import Project from "@/models/Project";
 
-const siteUrl = "https://t1w.ir";
+const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.NEXT_PUBLIC_APP_URL ||
+  "https://t1w.ir"
+).replace(/\/+$/, "");
 
 export const revalidate = 3600;
 
-export default async function sitemap() {
-  let articles = [];
-  let projects = [];
+function getValidDate(...values) {
+  for (const value of values) {
+    if (!value) continue;
 
-  try {
-    await connectToDB();
+    const date = new Date(value);
 
-    articles = await Article.find({
-      $or: [{ status: "published" }, { status: { $exists: false } }],
-      noIndex: { $ne: true },
-      slug: { $exists: true, $ne: "" },
-    })
-      .select("slug updatedAt createdAt")
-      .sort({ updatedAt: -1 })
-      .lean();
-
-    projects = await Project.find({
-      $or: [{ status: "published" }, { status: { $exists: false } }],
-      noIndex: { $ne: true },
-      slug: { $exists: true, $ne: "" },
-    })
-      .select("slug updatedAt createdAt")
-      .sort({ updatedAt: -1 })
-      .lean();
-  } catch (error) {
-    console.error("Sitemap generation error:", error);
+    if (
+      !Number.isNaN(date.getTime()) &&
+      date.getTime() <= Date.now()
+    ) {
+      return date;
+    }
   }
 
-  const staticRoutes = [
-    {
-      url: `${siteUrl}/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${siteUrl}/seo`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/programming`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/web-design`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/about-us`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${siteUrl}/contact-us`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${siteUrl}/portfolios`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/articles`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
+  return undefined;
+}
+
+function normalizeUrl(value) {
+  try {
+    const url = new URL(value, `${siteUrl}/`);
+
+    if (!["http:", "https:"].includes(url.protocol)) {
+      return null;
+    }
+
+    url.hash = "";
+    url.pathname = url.pathname.replace(/\/+$/, "") || "/";
+
+    return url.href;
+  } catch {
+    return null;
+  }
+}
+
+function makeRoute(document, basePath, includeArticleDate = false) {
+  if (
+    typeof document.slug !== "string" ||
+    !document.slug.trim()
+  ) {
+    return null;
+  }
+
+  const url = `${siteUrl}/${basePath}/${encodeURIComponent(
+    document.slug
+  )}`;
+
+  const canonical =
+    typeof document.canonicalUrl === "string"
+      ? document.canonicalUrl.trim()
+      : "";
+
+  // آدرس دارای canonical متفاوت، وارد sitemap نمی‌شود.
+  if (
+    canonical &&
+    normalizeUrl(canonical) !== normalizeUrl(url)
+  ) {
+    return null;
+  }
+
+  const route = { url };
+
+  if (includeArticleDate) {
+    const lastModified = getValidDate(
+      document.contentUpdatedAt,
+      document.publishedAt,
+      document.createdAt
+    );
+
+    if (lastModified) {
+      route.lastModified = lastModified;
+    }
+  }
+
+  // برای پروژه‌ها تاریخ نامطمئن ثبت نمی‌کنیم.
+  return route;
+}
+
+export default async function sitemap() {
+  // در صورت خطای دیتابیس، sitemap ناقص برگردانده نمی‌شود.
+  await connectToDB();
+
+  const filter = {
+    status: "published",
+    noIndex: { $ne: true },
+    slug: { $type: "string", $ne: "" },
+  };
+
+  const [articles, projects] = await Promise.all([
+    Article.find(filter)
+      .select(
+        "slug canonicalUrl contentUpdatedAt publishedAt createdAt"
+      )
+      .lean()
+      .exec(),
+
+    Project.find(filter)
+      .select("slug canonicalUrl")
+      .lean()
+      .exec(),
+  ]);
+
+  const staticPaths = [
+    "/",
+    "/seo",
+    "/programming",
+    "/web-design",
+    "/about-us",
+    "/contact-us",
+    "/portfolios",
+    "/articles",
   ];
 
-  const articleRoutes = articles.map((article) => ({
-    url: `${siteUrl}/articles/${article.slug}`,
-    lastModified: article.updatedAt || article.createdAt || new Date(),
-    changeFrequency: "weekly",
-    priority: 0.8,
+  const staticRoutes = staticPaths.map((path) => ({
+    url: `${siteUrl}${path}`,
   }));
 
-  const portfolioRoutes = projects.map((project) => ({
-    url: `${siteUrl}/portfolio/${project.slug}`,
-    lastModified: project.updatedAt || project.createdAt || new Date(),
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  const articleRoutes = articles.map((article) =>
+    makeRoute(article, "articles", true)
+  );
 
-  return [...staticRoutes, ...articleRoutes, ...portfolioRoutes];
+  const projectRoutes = projects.map((project) =>
+    makeRoute(project, "portfolios")
+  );
+
+  const routes = [
+    ...staticRoutes,
+    ...articleRoutes,
+    ...projectRoutes,
+  ].filter(Boolean);
+
+  // حذف آدرس‌های تکراری
+  return [
+    ...new Map(
+      routes.map((route) => [route.url, route])
+    ).values(),
+  ];
 }

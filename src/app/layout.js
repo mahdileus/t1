@@ -42,10 +42,6 @@ export const metadata = {
   publisher: "آرین تجارت تیوان",
   category: "Web Design, SEO, Digital Marketing",
 
-  alternates: {
-    canonical: "/",
-  },
-
   robots: {
     index: true,
     follow: true,

@@ -16,8 +16,14 @@ import ArticleCategory from "@/models/ArticleCategory";
 import connectToDB from "@/configs/db";
 import ArticleModel from "@/models/Article";
 import ProjectModel from "@/models/Project";
-
+export const metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 export default async function Home() {
+
+
   await connectToDB();
 
   const posts = await ArticleModel.find({
@@ -27,17 +33,21 @@ export default async function Home() {
     .sort({ publishedAt: -1, createdAt: -1 })
     .limit(8)
     .select(
-      "title slug excerpt description cover coverAlt createdAt publishedAt readingTime category"
+      "title slug excerpt shortDescription description cover coverAlt " +
+      "createdAt publishedAt contentUpdatedAt readingTime category"
     )
     .populate("category", "title slug")
     .lean();
 
   const projects = await ProjectModel.find({
-
+    status: "published",
   })
     .sort({ createdAt: -1 })
     .limit(8)
-    .select("title slug excerpt description cover coverAlt createdAt category")
+    .select(
+      "title slug thumbnail mainPicture shortDescription " +
+      "excerpt description cover coverAlt imageAlt createdAt category"
+    )
     .lean();
 
   const footerPosts = posts.slice(0, 4);

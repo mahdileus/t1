@@ -1,7 +1,29 @@
 import Link from "next/link";
 import { HiOutlineCalendar } from "react-icons/hi";
 
-export default function PostCard({post}) {
+export default function PostCard({ post }) {
+  const dateCandidates = [
+    { value: post.contentUpdatedAt, label: "بروزرسانی" },
+    { value: post.publishedAt, label: "انتشار" },
+    { value: post.createdAt, label: "انتشار" },
+  ];
+
+  const displayDate = dateCandidates
+    .filter((item) => item.value)
+    .map((item) => ({
+      ...item,
+      date: new Date(item.value),
+    }))
+    .find((item) => !Number.isNaN(item.date.getTime()));
+
+  const formattedDate = displayDate
+    ? displayDate.date.toLocaleDateString("fa-IR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "Asia/Tehran",
+    })
+    : "";
   return (
     <div className="relative w-70 h-[400px] font-yekan-bakh rounded-3xl overflow-hidden shadow-lg group">
       {/* تصویر پس‌زمینه */}
@@ -17,20 +39,25 @@ export default function PostCard({post}) {
       {/* محتوای مقاله */}
       <div className="relative z-10 flex flex-col justify-end h-full p-6 text-white space-y-4">
         {/* تاریخ و آیکن */}
-        <div className="flex items-center gap-2 bg-[#ff9436] text-white text-sm px-3 py-1 rounded-full w-max">
-          <HiOutlineCalendar className="text-lg" />
-          <span> {new Date(post.createdAt).toLocaleDateString("fa-IR")}</span>
-        </div>
+        {displayDate && (
+          <div className="flex items-center gap-2 bg-[#ff9436] text-white text-sm px-3 py-1 rounded-full w-max">
+            <HiOutlineCalendar aria-hidden="true" className="text-lg" />
+
+            <time dateTime={displayDate.date.toISOString()}>
+              {displayDate.label}: {formattedDate}
+            </time>
+          </div>
+        )}
 
         {/* عنوان مقاله */}
-        <Link href={`/articles/${post.slug}`} className="text-xl font-bold leading-7">
-            {post.title}
+        <Link href={`/articles/${post.slug}`} className="text-base font-medium text-justify leading-7">
+          {post.title}
         </Link>
 
         {/* توضیح کوتاه */}
         <p className="text-sm text-gray-100 leading-6 line-clamp-4 text-justify">
-            {post.shortDescription}
-                    </p>
+          {post.excerpt || post.shortDescription}
+        </p>
       </div>
 
       {/* دکمه پایین شناور (در صورت نیاز) */}

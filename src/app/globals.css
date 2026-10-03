@@ -356,7 +356,7 @@ font-style: normal;
 
 .rich-text {
   direction: rtl;
-  text-align: right;
+  text-align: justify;
   color: #1f2937;
   font-size: 15px;
   line-height: 2.15;
@@ -528,6 +528,7 @@ font-style: normal;
 
   .rich-text {
     font-size: 14px;
+    text-align: justify;
   }
 }
 

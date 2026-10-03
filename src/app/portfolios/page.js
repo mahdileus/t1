@@ -149,7 +149,7 @@ export default async function PortfolioPage() {
 
   const projects = await ProjectModel.find({})
     .sort({ createdAt: -1 })
-    .select("title slug description excerpt cover coverAlt tags category createdAt")
+    .select("title slug thumbnail description excerpt cover coverAlt tags category createdAt")
     .lean();
 
   const serializedProjects = JSON.parse(JSON.stringify(projects));
@@ -173,6 +173,7 @@ export default async function PortfolioPage() {
   );
 
   const portfolioSchema = buildPortfolioSchema(serializedProjects);
+
 
   return (
     <>

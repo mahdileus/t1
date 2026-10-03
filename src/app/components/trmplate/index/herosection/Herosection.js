@@ -2,52 +2,80 @@ import Link from "next/link";
 import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { PiDotsNineThin } from "react-icons/pi";
 import { FaSquareCheck } from "react-icons/fa6";
+
 export default function HeroSection() {
+  return (
+    <section aria-labelledby="home-title">
+      <div className="container relative flex flex-col-reverse items-center justify-between pt-[60px] md:flex-row md:pt-40">
+        <div className="w-full md:w-1/2">
+          <div className="flex flex-col items-center gap-6 md:gap-10">
+            <p className="border-y px-4 py-1 text-center font-yekan-bakh text-lg text-third md:text-xl">
+              اولین قدم برای موفقیت آنلاین
+            </p>
 
+            <h1
+              id="home-title"
+              className="text-center font-yekan-bakh text-6xl font-bold text-third md:text-7xl"
+            >
+              طراحی حرفه‌ای
+              <br />
+              وب‌سایت
+            </h1>
 
-    return (
-        <>
-            <div className="container pt-15 md:pt-40 items-center flex flex-col-reverse md:flex md:flex-row justify-between relative">
-                <div className=" w-[100%] md:w-[50%]">
-                    <div className="flex flex-col gap-6 md:gap-10 items-center">
-                        <span className="inline-flex">
-                            <h4 className=" text-third text-center font-yekan-bakh text-lg md:text-xl py-1 px-4 border-t border-b"> اولیـــــــن قــــدم بــــــــرای موفقیــــــت آنـــــــــلاین </h4>
-                        </span>
-                        <h1 className=" text-third text-center text-6xl md:text-7xl font-bold font-yekan-bakh"> طراحی حرفه ای<br /> وب ســـــــــایت </h1>
-                        <Link href={"/web-design"} className="flex justify-between group items-center hover:bg-black hover:border-black hover:text-white transition-all py-2 px-6 border-2 rounded-full gap-10">
-                            <p className="font-yekan-bakh text-lg ">شروع کنید</p>
-                            <HiOutlineArrowLongLeft className="text-3xl group-hover:-translate-x-2 transition-all" />
-                        </Link>
-                        <div className="flex justify-between items-center gap-5 pb-3 md:pb-0">
-                            <PiDotsNineThin className="text-7xl text-third" />
-                            <h4 className="font-yekan-bakh font-medium text-gray-700"><span className="font-bold text-secondery">تیوان</span> | طراحی وب‌سایت اختصاصی و راهکارهای <br/>دیجیتال مارکتینگ برای رشد سریع کسب‌وکار شما</h4>
+            <Link
+              href="/web-design"
+              className="group flex items-center justify-between gap-10 rounded-full border-2 px-6 py-2 transition-colors hover:border-black hover:bg-black hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondery focus-visible:ring-offset-4"
+            >
+              <span className="font-yekan-bakh text-lg">شروع کنید</span>
+              <HiOutlineArrowLongLeft
+                aria-hidden="true"
+                className="text-3xl motion-safe:transition-transform motion-safe:group-hover:-translate-x-2"
+              />
+            </Link>
 
-                        </div>
-
-                    </div>
-                </div>
-                <div className="w-[100%] md:w-[50%] select-none"><img
-                    src="/images/Group-237.png"
-                />
-                </div>
-
-
+            <div className="flex items-center justify-between gap-5 pb-3 md:pb-0">
+              <PiDotsNineThin aria-hidden="true" className="shrink-0 text-7xl text-third" />
+              <p className="font-yekan-bakh font-medium text-gray-700">
+                <span className="font-bold text-secondery">تیوان</span>
+                {" "}| طراحی وب‌سایت اختصاصی و راهکارهای
+                <br />
+                دیجیتال مارکتینگ برای رشد کسب‌وکار شما
+              </p>
             </div>
-            <div className="container md:-mt-9 mt-0 flex justify-between items-center mx-auto md:w-[55%] w-[95%] rounded-full bg-third py-2.5 md:py-5 px-0 md:px-6">
-                <div className="flex items-center justify-between gap-5 font-yekan-bakh text-white">
-                    <div className="bg-[#ecfcfc] p-2.5 md:p-5 rounded-full">
-                        <FaSquareCheck className=" text-[#21bdbd]" />
-                    </div>
+          </div>
+        </div>
 
-                    <h4 className="text-base md:text-lg"> مسیر موفقیت از یک انتخاب<br /> درســــت آغـــــــــاز می شـــــود </h4>
-                </div>
-                <div className="flex flex-col md:-mt-4 mt-0 items-center justify-center">
-                    <h4 className="font-arial text-3xl md:text-5xl font-bold text-secondery">T1</h4>
-                    <h4 className="font-yekan-bakh text-white text-base md:text-lg font-bold">آرین تجارت تیوان</h4>
+        <div className="w-full select-none md:w-1/2">
+          {/* Assumed decorative; add actual file dimensions when available. */}
+          <img
+            src="/images/Group-237.png"
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+            className="block h-auto w-full"
+          />
+        </div>
+      </div>
 
-                </div>
+      <div className="container mx-auto mt-0 flex w-[95%] items-center justify-between gap-3 rounded-full bg-third px-3 py-2.5 md:-mt-9 md:w-[55%] md:px-6 md:py-5">
+        <div className="flex items-center justify-between gap-3 font-yekan-bakh text-white md:gap-5">
+          <div className="rounded-full bg-[#ecfcfc] p-2.5 md:p-5">
+            <FaSquareCheck aria-hidden="true" className="text-[#21bdbd]" />
+          </div>
+          <p className="text-sm md:text-lg">
+            مسیر موفقیت از یک انتخاب
+            <br />
+            درست آغاز می‌شود
+          </p>
+        </div>
 
-            </div>
-        </>
-    )
+        <div className="mt-0 flex shrink-0 flex-col items-center justify-center md:-mt-4">
+          <span aria-hidden="true" className="font-arial text-3xl font-bold text-secondery md:text-5xl">T1</span>
+          <p className="font-yekan-bakh text-xs font-bold text-white md:text-lg">
+            آرین تجارت تیوان
+          </p>
+        </div>
+      </div>
+    </section>
+  );
 }
