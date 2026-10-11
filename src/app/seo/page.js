@@ -179,16 +179,15 @@ export default async function SeoPage() {
   await connectToDB();
 
   const projects = await ProjectModel.find({
+    status: "published",
     category: "سئو",
-
-    // اگر این فیلدها را در مدل Project داری، فعال کن:
-    // status: "published",
-    // visibility: "public",
-    // noIndex: { $ne: true },
   })
     .sort({ createdAt: -1 })
     .limit(8)
-    .select("title slug description excerpt cover coverAlt tags category createdAt")
+    .select(
+      "title slug thumbnail mainPicture shortDescription " +
+      "excerpt description cover coverAlt imageAlt createdAt category"
+    )
     .lean();
 
   const serializedProjects = JSON.parse(JSON.stringify(projects));
@@ -204,7 +203,7 @@ export default async function SeoPage() {
 
         <SEOProcess />
 
-        <Portfolio projects={serializedProjects} />
+        <Portfolio projects={JSON.parse(JSON.stringify(projects))} />
 
         <FAQAccordion
           faqs={faqs}

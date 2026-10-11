@@ -18,7 +18,7 @@ export default function ProjectCard({project}) {
       <div className="relative z-10 flex flex-col justify-end h-full p-6 text-white space-y-4">
 
         {/* عنوان مقاله */}
-        <Link href={`/portfolios/${project.slug}`} className="text-base opacity-0 text-justify group-hover:opacity-100 transition-all font-medium leading-7">
+        <Link href={`/portfolios/${project.slug}`} className="text-base opacity-0 text-justify group-hover:opacity-100 transition-all font-bold leading-7">
             {project.title}
         </Link>
                 {/* توضیح کوتاه */}

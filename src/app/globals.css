@@ -7,7 +7,7 @@
   --color-primary: #2d365d;
   --color-secondery: #ff9436;
     --color-third: #173372;
-    --font-yekan-akh: var(--font-yekan-bakh);
+    --font-yekan-bakh: var(--font-yekan-bakh);
   }
 @theme{
   --color-primary: #2d365d;
@@ -20,7 +20,7 @@
 
 body {
 
-  font-family:var(--font-yekan-akh);
+  font-family:var(--font-yekan-bakh);
   direction: rtl;
 }
 

@@ -176,18 +176,16 @@ export default async function ProgrammingPage() {
   await connectToDB();
 
   const projects = await ProjectModel.find({
+    status: "published",
     category: "برنامه نویسی",
-    // اگر این فیلدها را در مدل Project داری، فعال کن
-    // status: "published",
-    // visibility: "public",
-    // noIndex: { $ne: true },
   })
     .sort({ createdAt: -1 })
     .limit(8)
-    .select("title slug description excerpt cover coverAlt tags category createdAt")
+    .select(
+      "title slug thumbnail mainPicture shortDescription " +
+      "excerpt description cover coverAlt imageAlt createdAt category"
+    )
     .lean();
-
-  const serializedProjects = JSON.parse(JSON.stringify(projects));
 
   return (
     <>
@@ -202,7 +200,7 @@ export default async function ProgrammingPage() {
 
         <TechUseCases />
 
-        <Portfolio projects={serializedProjects} />
+        <Portfolio projects={JSON.parse(JSON.stringify(projects))} />
 
         <FAQAccordion
           faqs={faqs}
