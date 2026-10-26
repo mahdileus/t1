@@ -114,8 +114,10 @@ export default async function sitemap() {
       ...new Map(routes.map((route) => [route.url, route])).values(),
     ];
   } catch (error) {
-    // موقع build در Docker دیتابیس در دسترس نیست → فقط مسیرهای استاتیک
-    console.warn("Sitemap: DB unavailable during build, returning static routes only.", error.message);
+    console.warn(
+      "Sitemap: DB unavailable during build, returning static routes only.",
+      error?.message || error
+    );
     return staticRoutes;
   }
 }
