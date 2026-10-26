@@ -65,7 +65,7 @@ const MapBox = () => {
                 <div>
                   <p className="font-bold text-primary text-lg">آدرس :</p>
                   <p className="text-gray-700 text-base leading-6">
-                    تهران - خیابان ولیعصر - نبش طالفانی - مجتمع تجاری اداری نور - طبفه سوم - واحد 11050
+                    تهران - خیابان ولیعصر - نبش طالفانی - مجتمع اداری نور - طبفه دوم - واحد 1408
                   </p>
                 </div>
               </div>
@@ -73,9 +73,10 @@ const MapBox = () => {
               {/* شماره تماس */}
               <div className="flex items-start gap-3">
                 <IoMdCall className="text-secondery w-6 h-6 mt-1" />
-                <div>
+                <div className="flex flex-col items-center justify-between gap-2.5">
                   <p className="font-bold text-primary text-lg">شماره تماس :</p>
-                  <p className="text-gray-700 text-base">09123456789</p>
+                  <a href="tel:02186097769 " className="text-gray-700 text-base">02186097769</a>
+                  <a href="tel:09125673763 " className="text-gray-700 text-base">09125673763</a>
                 </div>
               </div>
 

@@ -7,6 +7,7 @@ import {
   PiPhone,
   PiTelegramLogo,
   PiYoutubeLogo,
+  PiMapPin
 } from "react-icons/pi";
 
 import ScrollTopButton from "@/app/components/module/footer/ScrollTopButton";
@@ -95,10 +96,10 @@ export default function Footer({ posts = [] }) {
             <div className="flex flex-col items-start justify-center text-right">
               <p className="text-lg font-medium text-primary">شماره تماس:</p>
               <a
-                href="tel:02186097738"
+                href="tel:02186097769"
                 className="text-2xl font-bold text-primary transition-colors hover:text-secondery"
               >
-                02186097738
+                02186097769
               </a>
               <a
                 href="tel:09125673763"
@@ -160,8 +161,17 @@ export default function Footer({ posts = [] }) {
 
             <p className="flex items-center justify-center gap-2 md:justify-start">
               <PiClock size={24} className="text-third" aria-hidden="true" />
-              ساعت کاری از ۸ صبح تا ۱۰ شب
+              ساعت کاری از 8 صبح تا 8 شب
             </p>
+            <div className="flex items-start gap-3 mt-6">
+              <PiMapPin size={24} className="text-primary mt-1" />
+              <div>
+                <p className=" text-primary text-base">آدرس :</p>
+                <p className="text-gray-700 text-base leading-6">
+                  تهران - خیابان ولیعصر - نبش طالفانی - مجتمع اداری نور - طبفه دوم - واحد 1408
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="mt-5 flex justify-center gap-4 text-third md:justify-start">

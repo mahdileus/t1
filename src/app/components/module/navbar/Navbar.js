@@ -31,7 +31,7 @@ export default function Navbar() {
                 <div className="flex justify-between items-center gap-4">
                     <div className="flex flex-col justify-center">
                     <p className="text-secondery font-yekan-bakh bg-white text-center rounded-full animate-pulse  ">پشتیبانی</p>
-                    <a href="tel:02186097738 " className="text-white font-yekan-bakh">02186097738</a>
+                    <a href="tel:02186097769 " className="text-white font-yekan-bakh">02186097769</a>
                     <a href="tel:09125673763 " className="text-white font-yekan-bakh -mt-1">09125673763</a>
                     </div>
                     <div className="bg-white p-2.5 rounded-full animate-bounce">
